@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>隐私政策 — 离线安全记事本</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 14px;
+      color: #6e6e73;
+    }
+    .badge {
+      display: inline-block;
+      background: #34c759;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      letter-spacing: 0.3px;
+    }
+    section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    section h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1d1d1f;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    section h2 .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    p, li {
+      font-size: 15px;
+      color: #3a3a3c;
+      margin-bottom: 10px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li { margin-bottom: 6px; }
+    .highlight {
+      background: #f0fdf4;
+      border-left: 4px solid #34c759;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 12px 0;
+    }
+    .highlight p { margin: 0; font-weight: 500; color: #1d6f3a; }
+    .contact-box {
+      background: #f5f5f7;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 12px;
+    }
+    .contact-box p { margin: 4px 0; font-size: 14px; color: #3a3a3c; }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 12px;
+      color: #aeaeb2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="badge">✓ 零数据收集</div>
+      <h1>隐私政策</h1>
+      <p>离线安全记事本 &nbsp;|&nbsp; 最后更新：2026 年 6 月 1 日</p>
+    </header>
+
+    <!-- 1 -->
+    <section>
+      <h2><span class="icon" style="background:#e8f5e9;">📋</span>概述</h2>
+      <p>
+        感谢您使用<strong>离线安全记事本</strong>（以下简称"本应用"）。
+        本应用由个人开发者独立开发，旨在为用户提供一款完全在本地设备上运行的私密记事工具。
+      </p>
+      <div class="highlight">
+        <p>本应用不收集、不传输、不存储任何用户数据到任何服务器或云端。您的所有笔记与设置始终仅存在于您自己的手机中。</p>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section>
+      <h2><span class="icon" style="background:#e3f2fd;">📂</span>我们收集哪些信息</h2>
+      <p><strong>本应用不收集任何个人信息。</strong>具体包括：</p>
+      <ul>
+        <li>不收集姓名、邮箱、电话或任何账户信息</li>
+        <li>不收集设备标识符（IDFA、IDFV 等）</li>
+        <li>不收集位置信息</li>
+        <li>不收集使用行为或崩溃报告（无 Analytics SDK）</li>
+        <li>不访问相机、麦克风、通讯录或其他系统权限</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section>
+      <h2><span class="icon" style="background:#fff3e0;">💾</span>数据如何存储</h2>
+      <p>您在本应用中创建的所有笔记均以加密格式存储于<strong>您设备本地沙盒目录</strong>中，具体技术细节如下：</p>
+      <ul>
+        <li>笔记数据以 JSON 格式保存，使用 iOS 文件系统级别的 <code>NSFileProtectionCompleteUntilFirstUserAuthentication</code> 加密保护</li>
+        <li>手势密码经过 SHA-256 哈希处理后存储于设备本地 UserDefaults，原始图案从不明文保存</li>
+        <li>应用卸载后，上述所有数据将随沙盒一并从设备上彻底清除</li>
+      </ul>
+      <div class="highlight">
+        <p>数据从不离开您的设备。无网络请求，无后台同步，无任何形式的数据上传。</p>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section>
+      <h2><span class="icon" style="background:#fce4ec;">🔒</span>安全保护</h2>
+      <p>本应用提供可选的本地手势密码锁，用于防止他人未经授权打开应用。该功能：</p>
+      <ul>
+        <li>完全在本地运行，不与任何服务器通信</li>
+        <li>密码哈希值仅存储于设备本地，不可逆还原</li>
+        <li>应用进入后台时自动锁定，保护您的隐私</li>
+      </ul>
+      <p>如您忘记手势密码，可通过卸载重装应用重置（笔记数据亦同步清除）。</p>
+    </section>
+
+    <!-- 5 -->
+    <section>
+      <h2><span class="icon" style="background:#ede7f6;">🚫</span>第三方服务</h2>
+      <p>本应用<strong>不集成任何第三方 SDK</strong>，包括但不限于：</p>
+      <ul>
+        <li>广告平台（Google AdMob、Meta Audience Network 等）</li>
+        <li>数据分析工具（Firebase、Amplitude、Mixpanel 等）</li>
+        <li>崩溃监控服务（Crashlytics、Sentry 等）</li>
+        <li>社交登录或分享组件</li>
+        <li>云存储或同步服务</li>
+      </ul>
+    </section>
+
+    <!-- 6 -->
+    <section>
+      <h2><span class="icon" style="background:#e0f7fa;">👶</span>儿童隐私</h2>
+      <p>
+        本应用不面向 13 岁以下儿童，也不故意收集任何儿童的个人信息。
+        如果您是未成年人的监护人，并认为其在使用本应用时提供了个人信息，请通过下方联系方式与我们联系。
+      </p>
+    </section>
+
+    <!-- 7 -->
+    <section>
+      <h2><span class="icon" style="background:#fff8e1;">📝</span>隐私政策变更</h2>
+      <p>
+        如本隐私政策发生重大变更，我们将在应用更新说明中予以告知，并更新本页面顶部的"最后更新"日期。
+        建议您定期查阅本页面以了解最新内容。继续使用本应用即视为接受更新后的隐私政策。
+      </p>
+    </section>
+
+    <!-- 8 -->
+    <section>
+      <h2><span class="icon" style="background:#f3e5f5;">📬</span>联系我们</h2>
+      <p>如您对本隐私政策有任何疑问，欢迎通过以下方式联系：</p>
+      <div class="contact-box">
+        <p>📧 开发者邮箱：<strong>请在此填写您的邮箱地址</strong></p>
+        <p>🌐 应用名称：离线安全记事本</p>
+        <p>📅 政策生效日期：2026 年 6 月 1 日</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>本隐私政策适用于「离线安全记事本」iOS 应用的所有版本。</p>
+      <p style="margin-top:6px;">© 2026 离线安全记事本. All rights reserved.</p>
+    </footer>
+
+  </div>
+</body>
+</html>
