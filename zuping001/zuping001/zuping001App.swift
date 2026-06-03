@@ -27,37 +27,31 @@ struct MainTabView: View {
     }
 
     var body: some View {
-        TabView(selection: tabSelection) {
-            NavigationView {
+        NavigationView {
+            TabView(selection: tabSelection) {
                 HomeView()
-            }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .tabItem {
-                Image(systemName: "house.fill")
-                Text("首页")
-            }
-            .tag(0)
+                    .tabItem {
+                        Image(systemName: "house.fill")
+                        Text("首页")
+                    }
+                    .tag(0)
 
-            NavigationView {
                 CartView()
-            }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .tabItem {
-                Image(systemName: "cart.fill")
-                Text("购物车")
-            }
-            .tag(1)
+                    .tabItem {
+                        Image(systemName: "cart.fill")
+                        Text("购物车")
+                    }
+                    .tag(1)
 
-            NavigationView {
                 ProfileView()
+                    .tabItem {
+                        Image(systemName: "person.fill")
+                        Text("个人中心")
+                    }
+                    .tag(2)
             }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .tabItem {
-                Image(systemName: "person.fill")
-                Text("个人中心")
-            }
-            .tag(2)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $authManager.showLoginView) {
             LoginView()
                 .environmentObject(authManager)

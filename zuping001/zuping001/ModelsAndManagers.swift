@@ -380,23 +380,91 @@ class ProductStore: ObservableObject {
     @Published var products: [Product] = []
     @Published var bannerProducts: [Product] = []
     
+    // 主线路：全球极速稳定的 jsDelivr CDN 直连线路，解决原始 GitHub Raw 地址在国内经常无法连接的问题
+    private let primaryAPIURL = "https://cdn.jsdelivr.net/gh/jianjun205/ios@main/zuping001/listSM.json"
+    // 备份线路：GitHub 原始物理镜像加速站
+    private let fallbackAPIURL = "https://raw.gitmirror.com/jianjun205/ios/main/zuping001/listSM.json"
+    // 用户直接指定的官方 GitHub 原始线路
+    private let originalAPIURL = "https://raw.githubusercontent.com/jianjun205/ios/main/zuping001/listSM.json"
+    
     func fetchProducts() {
         isLoading = true
         errorMessage = nil
         
-        // 1. 优先尝试从绝对路径加载最新的 listSM.json (最真实、开发直观)
+        // 尝试从高速 CDN 线路加载
+        fetchFromRemote(urlString: primaryAPIURL) { [weak self] success in
+            guard let self = self else { return }
+            if success { return }
+            
+            // 尝试备用镜像加速路线
+            print("🔄 [ProductStore] CDN 获取失败，尝试使用备用镜像路线中...")
+            self.fetchFromRemote(urlString: self.fallbackAPIURL) { success2 in
+                if success2 { return }
+                
+                // 尝试最底层原始 GitHub 默认物理路线
+                print("🔄 [ProductStore] 镜像获取失败，尝试最底层原始 GitHub 默认物理路线...")
+                self.fetchFromRemote(urlString: self.originalAPIURL) { success3 in
+                    if success3 { return }
+                    
+                    // 4. 当前面所有网络重试全部失障时，尝试本地读取兜底
+                    print("⚠️ [ProductStore] 所有网络获取失败，尝试执行本地绝对路径和Bundle读取...")
+                    self.fetchFromLocal()
+                }
+            }
+        }
+    }
+    
+    private func fetchFromRemote(urlString: String, onFinished: @escaping (Bool) -> Void) {
+        guard let url = URL(string: urlString) else {
+            onFinished(false)
+            return
+        }
+        
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+        request.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1", forHTTPHeaderField: "User-Agent")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("⚠️ [ProductStore] 网络加载故障 (\(urlString)): \(error.localizedDescription)")
+                    onFinished(false)
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode),
+                      let data = data else {
+                    onFinished(false)
+                    return
+                }
+                
+                do {
+                    let res = try JSONDecoder().decode(ProductListResponse.self, from: data)
+                    self.products = res.list
+                    self.bannerProducts = res.list.filter { $0.isBanner }
+                    self.errorMessage = nil
+                    self.isLoading = false
+                    onFinished(true)
+                } catch {
+                    print("⚠️ [ProductStore] 数据解析故障: \(error)")
+                    onFinished(false)
+                }
+            }
+        }.resume()
+    }
+    
+    private func fetchFromLocal() {
+        // 1. 优先尝试从绝对路径加载最新的 listSM.json
         let localPath = "/Users/andy/ios/zuping001/listSM.json"
         if let data = try? Data(contentsOf: URL(fileURLWithPath: localPath)) {
             do {
                 let response = try JSONDecoder().decode(ProductListResponse.self, from: data)
-                DispatchQueue.main.async {
-                    self.products = response.list
-                    self.bannerProducts = response.list.filter { $0.isBanner }
-                    self.isLoading = false
-                }
+                self.products = response.list
+                self.bannerProducts = response.list.filter { $0.isBanner }
+                self.isLoading = false
                 return
             } catch {
-                print("⚠️ 读取本地绝对路径 listSM.json 遇到解析错误: \(error)")
+                print("⚠️ [ProductStore] 读取本地绝对路径遇到解析错误: \(error)")
             }
         }
         
@@ -405,30 +473,26 @@ class ProductStore: ObservableObject {
            let data = try? Data(contentsOf: bundleURL) {
             do {
                 let response = try JSONDecoder().decode(ProductListResponse.self, from: data)
-                DispatchQueue.main.async {
-                    self.products = response.list
-                    self.bannerProducts = response.list.filter { $0.isBanner }
-                    self.isLoading = false
-                }
+                self.products = response.list
+                self.bannerProducts = response.list.filter { $0.isBanner }
+                self.isLoading = false
                 return
             } catch {
-                print("⚠️ 读取 Bundle 内 listSM.json 遇到解析错误: \(error)")
+                print("⚠️ [ProductStore] 读取 Bundle 内遇到解析错误: \(error)")
             }
         }
         
-        // 3. 终极兜底（如果上面两种读取全部失败的话，使用高质量的静态兜底数据）
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let mockProducts = [
-                Product(id: "1", name: "iPhone 15 Pro Max 512GB", category: "手机平板", price: 39.0, description: "搭载最新 A17 Pro 芯片，全新钛金属物理边框设计。4800万像素主摄，5倍光学变焦，长焦效果极其震撼，专业自媒体陈列与出片首选。", imageUrl: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60", isBanner: true),
-                Product(id: "2", name: "iPad Pro 12.9 英寸 M2", category: "手机平板", price: 29.0, description: "业界天花板级生产力工具。搭配 Apple Pencil 以及极速妙控键盘，运行澎湃 M2 芯片，绚丽的 Liquid 视网膜 XDR 屏带给你顶级视听。", imageUrl: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=60", isBanner: true),
-                Product(id: "17", name: "索尼 Alpha 7 IV 全画幅微单", category: "相机摄影", price: 49.0, description: "3300万像素全新背照式传感器，超强双影像核心。实时自动眼部对焦及4K 60p强力视频记录，全能级生产力战士。", imageUrl: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&auto=format&fit=crop&q=60", isBanner: true),
-                Product(id: "33", name: "DJI Mavic 3 Pro 旗舰三摄", category: "无人机", price: 69.0, description: "划时代哈苏三中焦镜头，全面搭载多层云台。全方位全向避障与 43 分钟安全巡航，实现上帝视角的尽情挥洒。", imageUrl: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=500&auto=format&fit=crop&q=60", isBanner: true),
-                Product(id: "49", name: "MacBook Pro 16 M3 Max 顶配", category: "笔记本电脑", price: 99.0, description: "16核CPU、40核GPU、搭载可怕的128GB统一内存。地表最强移动工作站，通吃所有超重度剪辑与专业AI模型本土编译。", imageUrl: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=60", isBanner: true)
-            ]
-            self.products = mockProducts
-            self.bannerProducts = mockProducts.filter { $0.isBanner }
-            self.isLoading = false
-        }
+        // 3. 静态兜底数据
+        let mockProducts = [
+            Product(id: "1", name: "iPhone 15 Pro Max 512GB", category: "手机平板", price: 39.0, description: "搭载最新 A17 Pro 芯片，全新钛金属物理边框设计。4800万像素主摄，5倍光学变焦，长焦效果极其震撼，专业自媒体陈列与出片首选。", imageUrl: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60", isBanner: true),
+            Product(id: "2", name: "iPad Pro 12.9 英寸 M2", category: "手机平板", price: 29.0, description: "业界天花板级生产力工具。搭配 Apple Pencil 以及极速妙控键盘，运行澎湃 M2 芯片，绚丽的 Liquid 视网膜 XDR 屏带给你顶级视听。", imageUrl: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=60", isBanner: true),
+            Product(id: "17", name: "索尼 Alpha 7 IV 全画幅微单", category: "相机摄影", price: 49.0, description: "3300万像素全新背照式传感器，超强双影像核心。实时自动眼部对焦及4K 60p强力视频记录，全能级生产力战士。", imageUrl: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&auto=format&fit=crop&q=60", isBanner: true),
+            Product(id: "33", name: "DJI Mavic 3 Pro 旗舰三摄", category: "无人机", price: 69.0, description: "划时代哈苏三中焦镜头，全面搭载多层云台。全方位全向避障与 43 分钟安全巡航，实现上帝视角的尽情挥洒。", imageUrl: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=500&auto=format&fit=crop&q=60", isBanner: true),
+            Product(id: "49", name: "MacBook Pro 16 M3 Max 顶配", category: "笔记本电脑", price: 99.0, description: "16核CPU、40核GPU、搭载可怕的128GB统一内存。地表最强移动工作站，通吃所有超重度剪辑与专业AI模型本土编译。", imageUrl: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=60", isBanner: true)
+        ]
+        self.products = mockProducts
+        self.bannerProducts = mockProducts.filter { $0.isBanner }
+        self.isLoading = false
     }
 }
 
