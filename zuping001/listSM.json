@@ -161,7 +161,7 @@
             "name": "佳能 EOS R5 8K无反相机",
             "description": "专业级 4500 万像素及顶级 8K 视频直接内录。支持强悍的5轴防抖，给到商业人像、风光摄影不可超越的质感。",
             "price": 59.0,
-            "imageUrl": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=500&auto=format&fit=crop&q=60",
             "category": "相机摄影",
             "isBanner": true
         },
@@ -188,7 +188,7 @@
             "name": "佳能 EOS R6 Mark II 全能无反",
             "description": "超高速每秒 40 张连续追焦速射，2420万全画幅。暗光对焦性能拔群，完美胜任婚礼现场及体育赛事动态拍摄。",
             "price": 39.0,
-            "imageUrl": "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=500&auto=format&fit=crop&q=60",
             "category": "相机摄影",
             "isBanner": false
         },
@@ -224,7 +224,7 @@
             "name": "富士 X100VI 紧凑型人文街拍相机",
             "description": "极为紧俏的人文画质大师。4020万像素与六阶防抖，复古旁轴机械颜值。让每一次日常按动都具有强烈故事质感。",
             "price": 45.0,
-            "imageUrl": "https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=500&auto=format&fit=crop&q=60",
             "category": "相机摄影",
             "isBanner": false
         },
@@ -278,7 +278,7 @@
             "name": "思锐电影镜头套组 (50mm, 35mm)",
             "description": "宽荧幕变形电影镜头组合，自带独特蓝线拉丝炫光特效与复古宽幅电影画幅观感。让你的低预算短片也能拥有十足呼吸感。",
             "price": 22.0,
-            "imageUrl": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
             "category": "相机摄影",
             "isBanner": false
         },
@@ -323,7 +323,7 @@
             "name": "DJI Inspire 3 生态级电影航拍机",
             "description": "影视级专业大疆摄影飞船。搭载全画幅 8K ProRes RAW 电影云台，支持厘米级 RTK 对地导航及全天候环形感知。",
             "price": 299.0,
-            "imageUrl": "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1501183007986-d0d080b147f9?w=500&auto=format&fit=crop&q=60",
             "category": "无人机",
             "isBanner": false
         },
@@ -332,7 +332,7 @@
             "name": "DJI Avata 2 穿越机第一人称视角",
             "description": "极幻刺激的头戴第一人称视界（FPV），全包裹涵道式桨叶设计。一键实现空中翻滚和极速窄缝穿梭，肾上腺素狂飙。",
             "price": 35.0,
-            "imageUrl": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1505673542670-a5e3ff5b14a3?w=500&auto=format&fit=crop&q=60",
             "category": "无人机",
             "isBanner": false
         },
@@ -350,7 +350,7 @@
             "name": "极飞 V50 农业喷洒植保无人机",
             "description": "工业级大载荷，完美适配农田规模喷洒、高精度农药肥料植保任务。全自动雷达仿地规划路线，大农业全境好帮手。",
             "price": 159.0,
-            "imageUrl": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=60",
             "category": "无人机",
             "isBanner": false
         },
@@ -368,7 +368,7 @@
             "name": "DJI Mavic 2 行业双光版热成像航拍",
             "description": "集成微型高分辨率红外热成像传感器和可见光相机，可在复杂的搜救、消防和夜间巡逻中提供不可或缺的双重视觉转换能力。",
             "price": 129.0,
-            "imageUrl": "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=500&auto=format&fit=crop&q=60",
             "category": "无人机",
             "isBanner": false
         },
@@ -449,7 +449,7 @@
             "name": "联想拯救者 Y9000P 旗舰游戏本",
             "description": "搭载Intel酷睿 i9-14900HX 搭配狂暴满血 RTX 4080 独显。240Hz超高刷新率电竞屏，绝佳冷锋散热，让主流3A巨作顺畅无延迟运行。",
             "price": 49.0,
-            "imageUrl": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?w=500&auto=format&fit=crop&q=60",
             "category": "笔记本电脑",
             "isBanner": true
         },
@@ -494,7 +494,7 @@
             "name": "华为 MateBook X Pro 三色旗舰",
             "description": "行业瞩目的980克极限超轻量体量！搭载柔性 14.2英寸 120Hz 视网膜触控屏，智慧小艺助理配合全场景无缝跨端传输。",
             "price": 39.0,
-            "imageUrl": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=500&auto=format&fit=crop&q=60",
             "category": "笔记本电脑",
             "isBanner": false
         },
@@ -512,7 +512,7 @@
             "name": "机械师 曙光 16 狂暴独显本",
             "description": "硬核机甲风全金属外甲身，双路涡轮飓风，接口涵盖全面。在处理重度 3D 渲染和高码率媒体压缩时提供高能不降频的狂暴守护。",
             "price": 27.0,
-            "imageUrl": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=500&auto=format&fit=crop&q=60",
             "category": "笔记本电脑",
             "isBanner": false
         },
@@ -521,7 +521,7 @@
             "name": "微软 Surface Pro 9 二合一轻薄本",
             "description": "极具灵性的拆卸键盘磁吸设计。既是顶尖绘图平板，又是硬朗澎湃的办公便携轻薄本，十点触控与轻巧身形完美收纳。",
             "price": 24.0,
-            "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=500&auto=format&fit=crop&q=60",
             "category": "笔记本电脑",
             "isBanner": false
         },
@@ -530,7 +530,7 @@
             "name": "雷蛇 灵刃 16 高端电竞轻薄本",
             "description": "高贵纯黑阳极氧化一体铝合金机身。搭载双模 Mini-LED 全新绚红屏，兼具了性能本的狂暴实力与极致紧凑的奢侈艺术细节。",
             "price": 79.0,
-            "imageUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60",
             "category": "笔记本电脑",
             "isBanner": false
         },
@@ -575,7 +575,7 @@
             "name": "外星人 Alienware m18 性能怪兽",
             "description": "来自深空的顶级统治者。高达 18 英寸冰冷铝金怪兽机身，预装外星人定制散热硬核气道。让你的电竞体验享受前所未有的顶奢气场。",
             "price": 95.0,
-            "imageUrl": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&auto=format&fit=crop&q=60",
+            "imageUrl": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500&auto=format&fit=crop&q=60",
             "category": "笔记本电脑",
             "isBanner": false
         }
