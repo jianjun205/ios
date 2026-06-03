@@ -104,6 +104,23 @@ struct RemoteImageView: View {
     private func getOptimizedURL(_ urlStr: String, useFallback: Bool = false) -> String {
         let trimmed = urlStr.trimmingCharacters(in: .whitespacesAndNewlines)
         
+        // 针对 Unsplash 图片在国内因 GFW 封锁导致图片绝对打不开、加载极慢、超时丢包等问题进行全自动镜像中继与动态加速
+        if trimmed.contains("images.unsplash.com") {
+            if useFallback {
+                // 备用线路：采用 image.weserv.nl 代理服务
+                if let encoded = trimmed.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+                    return "https://image.weserv.nl/?url=\(encoded)"
+                }
+                return trimmed.replacingOccurrences(of: "https://images.unsplash.com/", with: "https://image.weserv.nl/?url=https://images.unsplash.com/")
+            } else {
+                // 主线路：利用完全免费、由 Cloudflare 加速、访问极速且通畅的全球图片中继 cdn wsrv.nl 进行代理及穿透
+                if let encoded = trimmed.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+                    return "https://wsrv.nl/?url=\(encoded)"
+                }
+                return trimmed.replacingOccurrences(of: "https://images.unsplash.com/", with: "https://wsrv.nl/?url=https://images.unsplash.com/")
+            }
+        }
+        
         // 针对raw.githubusercontent.com加载极其缓慢甚至被墙的问题进行多通道优化
         if trimmed.contains("raw.githubusercontent.com") {
             if useFallback {
@@ -148,9 +165,15 @@ struct RemoteImageView: View {
     private func executeDownload(useFallback: Bool) {
         let requestUrlStr = getOptimizedURL(url, useFallback: useFallback)
         
-        // 增进安全：对可能含有特殊字符或中文的URL进行高兼容性百分比转义，防止URL创建失败
-        guard let encodedUrlString = requestUrlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let imageURL = URL(string: encodedUrlString) else {
+        // 增进安全：对可能含有特殊字符或中文的URL进行高兼容性百分比转义，并防范已带有转义符的链接发生二次双重转义
+        let encodedUrlString: String
+        if requestUrlStr.contains("%") {
+            encodedUrlString = requestUrlStr
+        } else {
+            encodedUrlString = requestUrlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? requestUrlStr
+        }
+        
+        guard let imageURL = URL(string: encodedUrlString) else {
             print("⚠️ [RemoteImageView] URL格式非法: \(requestUrlStr)")
             return
         }

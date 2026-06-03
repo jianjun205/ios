@@ -391,7 +391,14 @@ class ProductStore: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        // 尝试从高速 CDN 线路加载
+        // 1. 优先尝试从本地绝对物理路径以及 App Bundle 中读取最新的 listSM.json
+        // 这在本地开发和设备调试时极其关键，能够避开任何在线 CDN 缓存迟滞，让您对 listSM.json 的更改瞬时呈现
+        if fetchFromLocal() {
+            return
+        }
+        
+        // 2. 如果本地绝对路径和 Bundle 均未命中（如发布后的正式用户端），降级尝试从高速 CDN 线路加载
+        print("🔄 [ProductStore] 本地加载未命中，启动网络拉取进程...")
         fetchFromRemote(urlString: primaryAPIURL) { [weak self] success in
             guard let self = self else { return }
             if success { return }
@@ -406,9 +413,9 @@ class ProductStore: ObservableObject {
                 self.fetchFromRemote(urlString: self.originalAPIURL) { success3 in
                     if success3 { return }
                     
-                    // 4. 当前面所有网络重试全部失障时，尝试本地读取兜底
-                    print("⚠️ [ProductStore] 所有网络获取失败，尝试执行本地绝对路径和Bundle读取...")
-                    self.fetchFromLocal()
+                    // 3. 最终静态兜底
+                    print("⚠️ [ProductStore] 所有网络及文件获取失败，执行静态数据兜底...")
+                    self.loadMockProducts()
                 }
             }
         }
@@ -453,7 +460,8 @@ class ProductStore: ObservableObject {
         }.resume()
     }
     
-    private func fetchFromLocal() {
+    @discardableResult
+    private func fetchFromLocal() -> Bool {
         // 1. 优先尝试从绝对路径加载最新的 listSM.json
         let localPath = "/Users/andy/ios/zuping001/listSM.json"
         if let data = try? Data(contentsOf: URL(fileURLWithPath: localPath)) {
@@ -462,7 +470,8 @@ class ProductStore: ObservableObject {
                 self.products = response.list
                 self.bannerProducts = response.list.filter { $0.isBanner }
                 self.isLoading = false
-                return
+                print("✅ [ProductStore] 成功从本地绝对物理路径加载商品列表：\(localPath)")
+                return true
             } catch {
                 print("⚠️ [ProductStore] 读取本地绝对路径遇到解析错误: \(error)")
             }
@@ -476,19 +485,50 @@ class ProductStore: ObservableObject {
                 self.products = response.list
                 self.bannerProducts = response.list.filter { $0.isBanner }
                 self.isLoading = false
-                return
+                print("✅ [ProductStore] 成功从 App Bundle 加载商品数据!")
+                return true
             } catch {
                 print("⚠️ [ProductStore] 读取 Bundle 内遇到解析错误: \(error)")
             }
         }
+        return false
+    }
+    
+    private func loadMockProducts() {
+        // 💾 尝试从本地绝对路径加载 listSM.json 作为最底层的静态兜底数据数据源
+        let localPath = "/Users/andy/ios/zuping001/listSM.json"
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: localPath)) {
+            do {
+                let response = try JSONDecoder().decode(ProductListResponse.self, from: data)
+                self.products = response.list
+                self.bannerProducts = response.list.filter { $0.isBanner }
+                self.isLoading = false
+                print("✅ [ProductStore] 静态兜底成功：已成功从本地绝对路径加载全部 \(response.list.count) 条静态商品！")
+                return
+            } catch {
+                print("⚠️ [ProductStore] 静态兜底解析本地绝对路径报错: \(error)")
+            }
+        }
         
-        // 3. 静态兜底数据
+        // 💾 尝试从 App Bundle 中加载 listSM.json 作为最后的静态本地兜底
+        if let bundleURL = Bundle.main.url(forResource: "listSM", withExtension: "json"),
+           let data = try? Data(contentsOf: bundleURL) {
+            do {
+                let response = try JSONDecoder().decode(ProductListResponse.self, from: data)
+                self.products = response.list
+                self.bannerProducts = response.list.filter { $0.isBanner }
+                self.isLoading = false
+                print("✅ [ProductStore] 静态兜底成功：已成功从 App Bundle 中加载全部 \(response.list.count) 条静态商品！")
+                return
+            } catch {
+                print("⚠️ [ProductStore] 静态兜底解析 Bundle 资源报错: \(error)")
+            }
+        }
+        
+        // 最后的最终极端备用数据（以防所有文件都不存在）
         let mockProducts = [
             Product(id: "1", name: "iPhone 15 Pro Max 512GB", category: "手机平板", price: 39.0, description: "搭载最新 A17 Pro 芯片，全新钛金属物理边框设计。4800万像素主摄，5倍光学变焦，长焦效果极其震撼，专业自媒体陈列与出片首选。", imageUrl: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60", isBanner: true),
-            Product(id: "2", name: "iPad Pro 12.9 英寸 M2", category: "手机平板", price: 29.0, description: "业界天花板级生产力工具。搭配 Apple Pencil 以及极速妙控键盘，运行澎湃 M2 芯片，绚丽的 Liquid 视网膜 XDR 屏带给你顶级视听。", imageUrl: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=60", isBanner: true),
-            Product(id: "17", name: "索尼 Alpha 7 IV 全画幅微单", category: "相机摄影", price: 49.0, description: "3300万像素全新背照式传感器，超强双影像核心。实时自动眼部对焦及4K 60p强力视频记录，全能级生产力战士。", imageUrl: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&auto=format&fit=crop&q=60", isBanner: true),
-            Product(id: "33", name: "DJI Mavic 3 Pro 旗舰三摄", category: "无人机", price: 69.0, description: "划时代哈苏三中焦镜头，全面搭载多层云台。全方位全向避障与 43 分钟安全巡航，实现上帝视角的尽情挥洒。", imageUrl: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=500&auto=format&fit=crop&q=60", isBanner: true),
-            Product(id: "49", name: "MacBook Pro 16 M3 Max 顶配", category: "笔记本电脑", price: 99.0, description: "16核CPU、40核GPU、搭载可怕的128GB统一内存。地表最强移动工作站，通吃所有超重度剪辑与专业AI模型本土编译。", imageUrl: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=60", isBanner: true)
+            Product(id: "2", name: "iPad Pro 12.9 英寸 M2", category: "手机平板", price: 29.0, description: "业界天花板级生产力工具。搭配 Apple Pencil 以及极速妙控键盘，运行澎湃 M2 芯片，绚丽的 Liquid 视网膜 XDR 屏带给你顶级视听。", imageUrl: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=60", isBanner: true)
         ]
         self.products = mockProducts
         self.bannerProducts = mockProducts.filter { $0.isBanner }
