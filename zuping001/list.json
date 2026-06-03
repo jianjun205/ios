@@ -1,0 +1,79 @@
+{
+    "code": 200,
+    "message": "success",
+    "total": 8,
+    "list": [
+        {
+            "id": "1",
+            "name": "经典武士雕塑",
+            "description": "战国时代风骨的武士题材雕塑作品，作者以细腻的手工雕琢呈现盔甲的层次质感与刀锋的凌厉气势，整体造型沉稳有力，极具东方美学韵味。\n适用于艺术展览、影视拍摄、品牌活动陈列与高端商业空间布置，能为场景增添一份庄重而富有故事感的文化氛围。",
+            "price": 399.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_1.png",
+            "category": "武士系列",
+            "isBanner": true
+        },
+        {
+            "id": "2",
+            "name": "神话龙形手办",
+            "description": "取材自东方神话中的祥龙形象，鳞片层叠分明，须髯飘逸灵动，底座融入云海与LED光效，营造腾云驾雾的视觉张力。\n适合新春主题展陈、文化沙龙、产品发布会等场景，能在活动现场快速吸引目光，强化东方文化的仪式感。",
+            "price": 469.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_2.png",
+            "category": "神话系列",
+            "isBanner": true
+        },
+        {
+            "id": "3",
+            "name": "机甲战士模型",
+            "description": "未来科幻题材机甲战士，多关节可动设计，配备多套武器与外甲组件，金属漆面工艺细腻，光影质感出众。\n适合科技产品发布、电竞赛事、科幻主题展览以及潮玩快闪空间，能瞬间点燃现场的未来感与硬核氛围。",
+            "price": 389.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_3.png",
+            "category": "机甲系列",
+            "isBanner": true
+        },
+        {
+            "id": "4",
+            "name": "古风仕女摆件",
+            "description": "以唐宋仕女为灵感的古风摆件，衣袂飘飘，神态温婉，雕刻工艺细致入微，整体气质典雅含蓄。\n适合茶艺空间、文创展厅、书房与中式酒店大堂陈列，是营造东方雅致氛围的理想选择。",
+            "price": 259.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_4.png",
+            "category": "古风系列",
+            "isBanner": false
+        },
+        {
+            "id": "5",
+            "name": "西方骑士雕塑",
+            "description": "中世纪重装骑士全身像，铠甲铆钉与盾牌纹章皆经手工雕琢，底座再现战场地形，具有强烈的史诗感。\n适合主题餐厅、桌游空间、影视剧组场景搭建以及奇幻主题活动现场布置。",
+            "price": 349.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_5.png",
+            "category": "骑士系列",
+            "isBanner": false
+        },
+        {
+            "id": "6",
+            "name": "动漫角色手办",
+            "description": "热门动漫IP官方授权手办，人物动作还原度高，色彩鲜亮饱满，附赠多款可替换面部表情件。\n适合动漫展会、二次元主题门店、潮玩活动以及粉丝见面会，能有效拉近与年轻消费群体的距离。",
+            "price": 299.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_6.png",
+            "category": "动漫系列",
+            "isBanner": false
+        },
+        {
+            "id": "7",
+            "name": "希腊神话雅典娜",
+            "description": "希腊神话中智慧女神雅典娜的全身雕塑，长袍褶皱与橄榄枝细节丰富，金色点缀提升视觉层次。\n适合艺术馆、奢侈品橱窗、高端讲座与品牌文化空间，能传递理性、典雅与艺术格调。",
+            "price": 529.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_7.png",
+            "category": "神话系列",
+            "isBanner": false
+        },
+        {
+            "id": "8",
+            "name": "Q版三国人物套装",
+            "description": "Q版三国人物系列套装共五只，包含刘关张及诸葛亮、赵云等经典角色，造型呆萌可爱，配色明快。\n适合儿童活动、文化教育展、文创集市与桌面摆陈，是兼具趣味性与文化性的轻量化展示方案。",
+            "price": 179.0,
+            "imageUrl": "https://raw.githubusercontent.com/jianjun205/oszuhao/main/oszuhao/img/figure_8.png",
+            "category": "Q版系列",
+            "isBanner": false
+        }
+    ]
+}

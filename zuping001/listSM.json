@@ -1,0 +1,583 @@
+{
+    "code": 200,
+    "message": "success",
+    "total": 64,
+    "list": [
+        {
+            "id": "1",
+            "name": "iPhone 15 Pro Max 512GB",
+            "description": "搭载最新 A17 Pro 芯片，全新钛金属物理边框设计。4800万像素主摄，5倍光学变焦，长焦效果极其震撼，专业自媒体陈列与出片首选。",
+            "price": 39.0,
+            "imageUrl": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": true
+        },
+        {
+            "id": "2",
+            "name": "iPad Pro 12.9 英寸 M2",
+            "description": "业界天花板级生产力工具。搭配 Apple Pencil 以及极速妙控键盘，运行澎湃 M2 芯片，绚丽的 Liquid 视网膜 XDR 屏带给你顶级视听。",
+            "price": 29.0,
+            "imageUrl": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": true
+        },
+        {
+            "id": "3",
+            "name": "华为 Mate 60 Pro 512GB",
+            "description": "双卫星通信加持，全新玄武机身，第二代昆仑玻璃。强悍自研麒麟芯，完美呈现先锋美学与极致性能底蕴。",
+            "price": 35.0,
+            "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "4",
+            "name": "小米 14 Ultra 专业影像套装",
+            "description": "徕卡全明星四摄，双长焦配置，配有专业摄影手柄。一键调出徕卡电影画质，记录属于你的极简浪漫瞬间。",
+            "price": 25.0,
+            "imageUrl": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "5",
+            "name": "三星 Galaxy S24 Ultra",
+            "description": "钛金属机身配合顶级直屏，支持 AI 实时翻译和重构级图片编辑，S Pen 纯白书写灵敏度极佳，引领移动AI时代。",
+            "price": 32.0,
+            "imageUrl": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "6",
+            "name": "vivo X100 Ultra 灭霸影像旗舰",
+            "description": "搭载一英寸蔡司主摄和行业天花板的2亿像素蔡司APO超级长焦，超强防抖与暗光特写，人像之神。",
+            "price": 28.0,
+            "imageUrl": "https://images.unsplash.com/photo-1565849563525-ad01e07f97a0?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "7",
+            "name": "OPPO Find X7 Ultra",
+            "description": "双潜望四主摄画质，哈苏大师影像，支持全焦段细腻虚化。尊享卫星通信，素皮与金属拼接的高奢极简美学。",
+            "price": 27.0,
+            "imageUrl": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "8",
+            "name": "iPad Air 5 256GB WiFi版",
+            "description": "搭载 M1 芯片，多彩轻薄机身，性价比最高的移动办公和插画设计利器，完美处理多任务负载。",
+            "price": 19.0,
+            "imageUrl": "https://images.unsplash.com/photo-1589739900243-4b52cd9b104e?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "9",
+            "name": "华为 MatePad Pro 13.2英寸",
+            "description": "超万级压感星闪手写笔。13.2英寸柔性 OLED 屏幕，极细边框，厚度仅为5.5mm，带来难以置信的纸感体验。",
+            "price": 22.0,
+            "imageUrl": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "10",
+            "name": "一加 12 16GB+512GB",
+            "description": "配置拉满的性能东方旗舰。行业首发明眸护眼屏幕，搭载顶级骁龙 8 Gen 3 平台，电竞高通散热极佳。",
+            "price": 18.0,
+            "imageUrl": "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "11",
+            "name": "iPhone 14 Pro 256GB",
+            "description": "灵动岛首秀，搭载 A16 仿生芯片，亮丽常亮显示。极智 4800 万主摄防抖，依旧在创作用途极其能打。",
+            "price": 26.0,
+            "imageUrl": "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "12",
+            "name": "小米平板 6 Max 14英寸",
+            "description": "14英寸震撼视野，搭配独创金沙环立体扬声器，专为移动分屏办公、大图绘制、会议演讲定制生产力套件。",
+            "price": 16.0,
+            "imageUrl": "https://images.unsplash.com/photo-1527698266440-12104e498b76?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "13",
+            "name": "三星 Galaxy Tab S9 Ultra",
+            "description": "14.6英寸大面积装甲铝屏幕，IP68级防尘防水，全生态完美联动，重塑二合一效率想象边界。",
+            "price": 24.0,
+            "imageUrl": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "14",
+            "name": "华为 Pura 70 Ultra",
+            "description": "行业独创伸缩摄像头结构。超联光感超聚光微距，绝佳红枫设计质感，致敬影像先锋派的绝对高光之作。",
+            "price": 34.0,
+            "imageUrl": "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "15",
+            "name": "魅族 21 PRO",
+            "description": "极智无界美学设计。21:9 单手无极黄金比例，顶尖超声波指纹解锁，纯净无广告生态，玩家绝妙追求。",
+            "price": 17.0,
+            "imageUrl": "https://images.unsplash.com/photo-1574757565409-e262a2100cf1?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "16",
+            "name": "红魔 9 Pro+ 极限制冷电竞手机",
+            "description": "纯平背部无摄像头突起！隐藏式主动强力液冷风扇，专属双独立游戏触控肩键，毫无短板的终极移动电竞设备。",
+            "price": 23.0,
+            "imageUrl": "https://images.unsplash.com/photo-1621330396173-e41b1cafd17f?w=500&auto=format&fit=crop&q=60",
+            "category": "手机平板",
+            "isBanner": false
+        },
+        {
+            "id": "17",
+            "name": "索尼 Alpha 7 IV 全画幅微单",
+            "description": "3300万像素全新背照式传感器，超强双影像核心。实时自动眼部对焦及4K 60p强力视频记录，全能级生产力战士。",
+            "price": 49.0,
+            "imageUrl": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": true
+        },
+        {
+            "id": "18",
+            "name": "佳能 EOS R5 8K无反相机",
+            "description": "专业级 4500 万像素及顶级 8K 视频直接内录。支持强悍的5轴防抖，给到商业人像、风光摄影不可超越的质感。",
+            "price": 59.0,
+            "imageUrl": "https://images.unsplash.com/photo-1502920917128-1fc5006d421b?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": true
+        },
+        {
+            "id": "19",
+            "name": "富士 X-T5 经典复古相机",
+            "description": "搭载 4020 万像素 X-Trans 5 传感器，经典标志性模拟复古胶片颗粒滤镜，极具人文氛围，瞬间拉满创作张力。",
+            "price": 35.0,
+            "imageUrl": "https://images.unsplash.com/photo-1510127852285-a332f78ea9bc?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "20",
+            "name": "索尼 FX3 电影表现级微单",
+            "description": "全画幅紧凑型电影级摄影机。提供超乎想象的高感光度、15级以上宽广动态范围与内置主动散热，短片制作王中王。",
+            "price": 69.0,
+            "imageUrl": "https://images.unsplash.com/photo-1519741497674-611481863552?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "21",
+            "name": "佳能 EOS R6 Mark II 全能无反",
+            "description": "超高速每秒 40 张连续追焦速射，2420万全画幅。暗光对焦性能拔群，完美胜任婚礼现场及体育赛事动态拍摄。",
+            "price": 39.0,
+            "imageUrl": "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "22",
+            "name": "尼康 Z6 II 摄影双镜头套装",
+            "description": "2450万像素双 EXPEED 6 图形引擎，完美实现多细节渲染与快速写入，自带高素质套镜，兼顾风光与旅拍。",
+            "price": 29.0,
+            "imageUrl": "https://images.unsplash.com/photo-1495707902641-75ca588d2562?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "23",
+            "name": "索尼 Alpha 7R V 高像素画画之王",
+            "description": "恐怖的 6100 万最高解像拍摄能力！搭载 AI 智能对焦追踪处理器，完美捕捉秋毫细节，画质极尽奢华享受。",
+            "price": 55.0,
+            "imageUrl": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "24",
+            "name": "哈苏 X2D 100C 中画幅无反相机",
+            "description": "至臻中画幅 1 亿像素大底层。完美再现哈苏自然色彩（HNCS），内置机身防抖与 1TB 极速固态，无可比拟的艺术创作终极选。",
+            "price": 129.0,
+            "imageUrl": "https://images.unsplash.com/photo-1566275529824-cca6d00a2536?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "25",
+            "name": "富士 X100VI 紧凑型人文街拍相机",
+            "description": "极为紧俏的人文画质大师。4020万像素与六阶防抖，复古旁轴机械颜值。让每一次日常按动都具有强烈故事质感。",
+            "price": 45.0,
+            "imageUrl": "https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "26",
+            "name": "DJI Osmo Pocket 3 口袋云台相机",
+            "description": "1英寸超大 CMOS 影像，搭载极为灵动的机械三轴防抖与一键横竖屏旋转。极其适合日常 VLOG 叙事、旅拍和探店。",
+            "price": 19.0,
+            "imageUrl": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "27",
+            "name": "GoPro HERO12 Black 顶配运动相机",
+            "description": "全新 HDR 音画摄制，配备强无敌的 HyperSmooth 6.0 电子防抖与全面防水外壳。极限运动、旅行下海不可分割的硬核装备。",
+            "price": 15.0,
+            "imageUrl": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "28",
+            "name": "索尼 FE 24-70mm F2.8 GM II 镜皇",
+            "description": "大师极速第二代。极细微的对焦马达，全焦段无可抗衡的分辨率与通透度，大幅减重后人机协调性极高。",
+            "price": 25.0,
+            "imageUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "29",
+            "name": "佳能 RF 24-70mm F2.8 L IS USM",
+            "description": "红圈旗舰必备，提供 5 级强效光学防抖和美轮美奂的佳能专属红圈柔焦焦外色彩。完美的商业形象多面手。",
+            "price": 24.0,
+            "imageUrl": "https://images.unsplash.com/photo-1619961602102-14eb0a624c96?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "30",
+            "name": "大疆 RS 4 Pro 专业手持相机稳定器",
+            "description": "集结高精度二代碳纤维电机和超平稳图传，完美搭配各型专业电影机及大变焦镜头，提供如丝般顺滑的运动轨镜控制。",
+            "price": 14.0,
+            "imageUrl": "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "31",
+            "name": "思锐电影镜头套组 (50mm, 35mm)",
+            "description": "宽荧幕变形电影镜头组合，自带独特蓝线拉丝炫光特效与复古宽幅电影画幅观感。让你的低预算短片也能拥有十足呼吸感。",
+            "price": 22.0,
+            "imageUrl": "https://images.unsplash.com/photo-1478479405421-ce83f92fb9ba?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "32",
+            "name": "富士 GFX 100S 中画幅画质怪兽",
+            "description": "极低租价，奢享 1 亿像素大画幅！内置五轴防抖在如此惊人的分辨率下能够保证完美无修片手持直出画质。",
+            "price": 89.0,
+            "imageUrl": "https://images.unsplash.com/photo-1452784444945-3f422708fe5e?w=500&auto=format&fit=crop&q=60",
+            "category": "相机摄影",
+            "isBanner": false
+        },
+        {
+            "id": "33",
+            "name": "DJI Mavic 3 Pro 旗舰三摄",
+            "description": "划时代哈苏三中焦镜头，全面搭载多层云台。全方位全向避障与 43 分钟安全巡航，实现上帝视角的尽情挥洒。",
+            "price": 69.0,
+            "imageUrl": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": true
+        },
+        {
+            "id": "34",
+            "name": "DJI Air 3 双镜头长续航航拍机",
+            "description": "革命性 70mm 中焦加广角双端影像，更具深度透视空间。大范围智能变焦与近 46 分钟续航，极度激发空中灵感。",
+            "price": 45.0,
+            "imageUrl": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": true
+        },
+        {
+            "id": "35",
+            "name": "DJI Mini 4 Pro 无损竖拍无人机",
+            "description": "无需登记，仅重 249g！搭载全向全感知主动避障系统与一键竖拍无损构图，小白也能在大片机位尽兴飞行。",
+            "price": 29.0,
+            "imageUrl": "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "36",
+            "name": "DJI Inspire 3 生态级电影航拍机",
+            "description": "影视级专业大疆摄影飞船。搭载全画幅 8K ProRes RAW 电影云台，支持厘米级 RTK 对地导航及全天候环形感知。",
+            "price": 299.0,
+            "imageUrl": "https://images.unsplash.com/photo-1506947411160-0092951c1423?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "37",
+            "name": "DJI Avata 2 穿越机第一人称视角",
+            "description": "极幻刺激的头戴第一人称视界（FPV），全包裹涵道式桨叶设计。一键实现空中翻滚和极速窄缝穿梭，肾上腺素狂飙。",
+            "price": 35.0,
+            "imageUrl": "https://images.unsplash.com/photo-1533512903513-e4d0d080c4fc?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "38",
+            "name": "DJI FPV 沉浸式穿越机单机套装",
+            "description": "时速轻松突破 140 公里/小时！自带急停悬停模式，集结速度感、操控感和拍摄高画质的极致综合运动飞行器。",
+            "price": 32.0,
+            "imageUrl": "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "39",
+            "name": "极飞 V50 农业喷洒植保无人机",
+            "description": "工业级大载荷，完美适配农田规模喷洒、高精度农药肥料植保任务。全自动雷达仿地规划路线，大农业全境好帮手。",
+            "price": 159.0,
+            "imageUrl": "https://images.unsplash.com/photo-1579829366248-204fe8406fca?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "40",
+            "name": "零度智控 Q100 室内科研教学机",
+            "description": "面向大中专院校或科研实验室，小巧而富有韧性，提供高精室内视觉光流定位以及丰富的模块化定制编程接口路径。",
+            "price": 49.0,
+            "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "41",
+            "name": "DJI Mavic 2 行业双光版热成像航拍",
+            "description": "集成微型高分辨率红外热成像传感器和可见光相机，可在复杂的搜救、消防和夜间巡逻中提供不可或缺的双重视觉转换能力。",
+            "price": 129.0,
+            "imageUrl": "https://images.unsplash.com/photo-1522002590262-aa96f97f43c3?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "42",
+            "name": "普宙双光多功能行业应用巡查机",
+            "description": "面向严酷工业环境的折叠飞行器，超强变焦与高对比度测温探头紧密咬合，支持远程网路操控和厘米精度全能巡逻。",
+            "price": 119.0,
+            "imageUrl": "https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "43",
+            "name": "大疆经纬 M30T 工业防沙雨级巡检机",
+            "description": "IP55 天候防水防尘。可在-20℃至50℃极端冷热中稳定出勤，集成热成像、激光测距、大变焦为一体的绝对重工业霸主。",
+            "price": 259.0,
+            "imageUrl": "https://images.unsplash.com/photo-1504893524553-ac55fbf698be?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "44",
+            "name": "DJI Mini 3 随身折叠便携入门机",
+            "description": "专为旅游出行打造，拥有轻如鸿毛的体量，超强抗风和出色的无损竖拍支持。小预算下让每个旅行日常都留有长久纪念。",
+            "price": 19.0,
+            "imageUrl": "https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "45",
+            "name": "大疆 RS 3 手持稳定云台进阶套装",
+            "description": "轴锁自动释放，1.3千克极轻机身自重竟可稳扛3千克微单巨兽。一键控制手机变焦，让手持单兵也拥有电影画质身姿。",
+            "price": 12.0,
+            "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "46",
+            "name": "DJI FPV Goggles 3 飞行眼镜",
+            "description": "超高刷新率 OLED 双目显示屏幕，1080p高清实时超低延迟视频回传，让每一次视野变道都如临现场般逼真自然。",
+            "price": 15.0,
+            "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "47",
+            "name": "DJI FPV Remote Controller 2 遥控器",
+            "description": "人体工程学机械握感，极小毫秒反馈行程，精准传输飞行动作，是高级玩家或穿越机熟手打磨完美航线的终极控制台。",
+            "price": 10.0,
+            "imageUrl": "https://images.unsplash.com/photo-1484557052118-f32bd25b45b5?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "48",
+            "name": "DJI Mic 2 一拖二无线一键收音麦克风",
+            "description": "全新质感外观设计，自带内置 32-bit 浮点深度录音防爆音处理。超远距离、超级降噪，让每一个声音细节完美纯净复现。",
+            "price": 12.0,
+            "imageUrl": "https://images.unsplash.com/photo-1533512903513-e4d0d080c4fc?w=500&auto=format&fit=crop&q=60",
+            "category": "无人机",
+            "isBanner": false
+        },
+        {
+            "id": "49",
+            "name": "MacBook Pro 16 M3 Max 顶配",
+            "description": "16核CPU、40核GPU、搭载可怕的128GB统一内存。地表最强移动工作站，通吃所有超重度剪辑与专业AI模型本土编译。",
+            "price": 99.0,
+            "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": true
+        },
+        {
+            "id": "50",
+            "name": "联想拯救者 Y9000P 旗舰游戏本",
+            "description": "搭载Intel酷睿 i9-14900HX 搭配狂暴满血 RTX 4080 独显。240Hz超高刷新率电竞屏，绝佳冷锋散热，让主流3A巨作顺畅无延迟运行。",
+            "price": 49.0,
+            "imageUrl": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": true
+        },
+        {
+            "id": "51",
+            "name": "ROG 枪神 8 Plus 超神版 4090",
+            "description": "敗家之眼终极降临。极致炫目RGB灯效、18英寸恐怖视野，英特尔王牌芯配顶级 RTX 4090，是极客以及骨灰级玩家的信仰与现实归宿。",
+            "price": 89.0,
+            "imageUrl": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "52",
+            "name": "ThinkPad X1 Carbon 商务办公经典",
+            "description": "航天级碳纤维机身。经典的坚固结构、1.12千克无感自重，小红帽键盘触感一如既往无可比拟，是总裁和高管商务出差的忠实象征。",
+            "price": 35.0,
+            "imageUrl": "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "53",
+            "name": "惠普暗影精灵 10 游戏本",
+            "description": "狂暴火力全开。强电竞级RTX显卡加专业雷电接口，沉浸式低音环绕音响，不仅在寝室对战和自习开发中都极富竞技张力。",
+            "price": 29.0,
+            "imageUrl": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "54",
+            "name": "戴尔 XPS 16 高端极简创意本",
+            "description": "整块无缝大猩猩玻璃与隐藏式触控板，机身宛如一件前卫雕塑艺术品。全系配置专为影视后期、视觉设计师创作而调优。",
+            "price": 45.0,
+            "imageUrl": "https://images.unsplash.com/photo-1496181130204-755241524eab?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "55",
+            "name": "华为 MateBook X Pro 三色旗舰",
+            "description": "行业瞩目的980克极限超轻量体量！搭载柔性 14.2英寸 120Hz 视网膜触控屏，智慧小艺助理配合全场景无缝跨端传输。",
+            "price": 39.0,
+            "imageUrl": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "56",
+            "name": "机械革命 极光 Pro 程序员开发本",
+            "description": "兼顾完美性价比与扎实性能。搭载满血RTX4060及多线程开发编译大内存，让每个大型本地构建、虚拟机多开都能轻松胜任。",
+            "price": 25.0,
+            "imageUrl": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "57",
+            "name": "机械师 曙光 16 狂暴独显本",
+            "description": "硬核机甲风全金属外甲身，双路涡轮飓风，接口涵盖全面。在处理重度 3D 渲染和高码率媒体压缩时提供高能不降频的狂暴守护。",
+            "price": 27.0,
+            "imageUrl": "https://images.unsplash.com/photo-1611186871348-b1ece696ee54?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "58",
+            "name": "微软 Surface Pro 9 二合一轻薄本",
+            "description": "极具灵性的拆卸键盘磁吸设计。既是顶尖绘图平板，又是硬朗澎湃的办公便携轻薄本，十点触控与轻巧身形完美收纳。",
+            "price": 24.0,
+            "imageUrl": "https://images.unsplash.com/photo-1484788984921-0395a1213bef?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "59",
+            "name": "雷蛇 灵刃 16 高端电竞轻薄本",
+            "description": "高贵纯黑阳极氧化一体铝合金机身。搭载双模 Mini-LED 全新绚红屏，兼具了性能本的狂暴实力与极致紧凑的奢侈艺术细节。",
+            "price": 79.0,
+            "imageUrl": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "60",
+            "name": "华硕 无畏 Pro 15 创作本",
+            "description": "15.6英寸超饱满 OLED 华硕好屏，Delta E 约等于 1 的好莱坞级色准。对于后期精调色彩、摄影选片而言是不可多得的精准伙伴。",
+            "price": 22.0,
+            "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "61",
+            "name": "MacBook Air 13 M3 超轻薄",
+            "description": "极客出街首选。搭载 M3 新芯，无风扇零噪音极静环境。超乎想象的 18 小时超长电池耐久，全天出行毫无适配负载焦虑。",
+            "price": 23.0,
+            "imageUrl": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "62",
+            "name": "戴尔游匣 G15 战力版",
+            "description": "硬核多边形几何外观格调，内置大声扬防啸叫音效，配置主流电竞芯，在日常写代码、建模、大作联机极具野兽级抗压表现。",
+            "price": 18.0,
+            "imageUrl": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "63",
+            "name": "联想 小新 Pro 16 触屏轻薄本",
+            "description": "极窄边框大屏与全新多指精控，高瓦数性能持久平稳输出，极大提升日常中度表格编制、排版设计效率的国民级好本。",
+            "price": 19.0,
+            "imageUrl": "https://images.unsplash.com/photo-1537498425277-c283d32ef9db?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        },
+        {
+            "id": "64",
+            "name": "外星人 Alienware m18 性能怪兽",
+            "description": "来自深空的顶级统治者。高达 18 英寸冰冷铝金怪兽机身，预装外星人定制散热硬核气道。让你的电竞体验享受前所未有的顶奢气场。",
+            "price": 95.0,
+            "imageUrl": "https://images.unsplash.com/photo-1542744094-3a31f103e35f?w=500&auto=format&fit=crop&q=60",
+            "category": "笔记本电脑",
+            "isBanner": false
+        }
+    ]
+}
