@@ -203,7 +203,16 @@ struct LoginView: View {
     }
 
     private func openURL(_ urlString: String) {
-        guard let url = URL(string: urlString) else { return }
+        var finalURLString = urlString
+        if urlString.contains(".html") {
+            let timestamp = Int(Date().timeIntervalSince1970)
+            if urlString.contains("?") {
+                finalURLString = "\(urlString)&t=\(timestamp)"
+            } else {
+                finalURLString = "\(urlString)?t=\(timestamp)"
+            }
+        }
+        guard let url = URL(string: finalURLString) else { return }
         UIApplication.shared.open(url)
     }
 }
