@@ -573,7 +573,6 @@ struct AddAddressView: View {
     @State private var city = ""
     @State private var district = ""
     @State private var detail = ""
-    @State private var showRegionPicker = false
     @State private var showError = false
     @State private var errorMessage = ""
 
@@ -605,18 +604,13 @@ struct AddAddressView: View {
             }
 
             Section(header: Text("收货地址")) {
-                Button {
-                    showRegionPicker = true
-                } label: {
+                NavigationLink(destination: RegionPickerView(province: $province, city: $city, district: $district)) {
                     HStack {
                         Text("所在地区")
                             .foregroundColor(.primary)
                         Spacer()
                         Text(regionDisplay)
                             .foregroundColor(province.isEmpty ? .secondary : .primary)
-                        Image(systemName: "chevron.right")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
 
@@ -642,9 +636,6 @@ struct AddAddressView: View {
             }
             .disabled(name.isEmpty || phone.count != 11 || province.isEmpty || city.isEmpty || district.isEmpty || detail.isEmpty)
         )
-        .sheet(isPresented: $showRegionPicker) {
-            RegionPickerView(province: $province, city: $city, district: $district)
-        }
         .alert(isPresented: $showError) {
             Alert(
                 title: Text("格式错误"),
@@ -698,65 +689,61 @@ struct RegionPickerView: View {
     }
 
     var body: some View {
-        NavigationView {
-            HStack(spacing: 0) {
-                Picker("省份", selection: provinceBinding) {
-                    ForEach(0..<provinces.count, id: \.self) { index in
-                        Text(provinces[index].name).tag(index)
-                    }
+        HStack(spacing: 0) {
+            Picker("省份", selection: provinceBinding) {
+                ForEach(0..<provinces.count, id: \.self) { index in
+                    Text(provinces[index].name).tag(index)
                 }
-                .pickerStyle(WheelPickerStyle())
-                .frame(maxWidth: .infinity)
-                .clipped()
-
-                Picker("城市", selection: cityBinding) {
-                    ForEach(0..<cities.count, id: \.self) { index in
-                        Text(cities[index].name).tag(index)
-                    }
-                }
-                .pickerStyle(WheelPickerStyle())
-                .frame(maxWidth: .infinity)
-                .clipped()
-
-                Picker("区县", selection: $selectedDistrictIndex) {
-                    ForEach(0..<districts.count, id: \.self) { index in
-                        Text(districts[index]).tag(index)
-                    }
-                }
-                .pickerStyle(WheelPickerStyle())
-                .frame(maxWidth: .infinity)
-                .clipped()
             }
-            .padding()
-            .navigationBarTitle("选择地区", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("取消") { presentationMode.wrappedValue.dismiss() },
-                trailing: Button("确定") {
-                    if selectedProvinceIndex < provinces.count {
-                        province = provinces[selectedProvinceIndex].name
-                    }
-                    if selectedCityIndex < cities.count {
-                        city = cities[selectedCityIndex].name
-                    }
-                    if selectedDistrictIndex < districts.count {
-                        district = districts[selectedDistrictIndex]
-                    }
-                    presentationMode.wrappedValue.dismiss()
+            .pickerStyle(WheelPickerStyle())
+            .frame(maxWidth: .infinity)
+            .clipped()
+
+            Picker("城市", selection: cityBinding) {
+                ForEach(0..<cities.count, id: \.self) { index in
+                    Text(cities[index].name).tag(index)
                 }
-            )
-            .onAppear {
-                if let pIdx = provinces.firstIndex(where: { $0.name == province }) {
-                    selectedProvinceIndex = pIdx
-                    if let cIdx = provinces[pIdx].cities.firstIndex(where: { $0.name == city }) {
-                        selectedCityIndex = cIdx
-                        if let dIdx = provinces[pIdx].cities[cIdx].districts.firstIndex(of: district) {
-                            selectedDistrictIndex = dIdx
-                        }
+            }
+            .pickerStyle(WheelPickerStyle())
+            .frame(maxWidth: .infinity)
+            .clipped()
+
+            Picker("区县", selection: $selectedDistrictIndex) {
+                ForEach(0..<districts.count, id: \.self) { index in
+                    Text(districts[index]).tag(index)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+            .frame(maxWidth: .infinity)
+            .clipped()
+        }
+        .padding()
+        .navigationBarTitle("选择地区", displayMode: .inline)
+        .navigationBarItems(
+            trailing: Button("确定") {
+                if selectedProvinceIndex < provinces.count {
+                    province = provinces[selectedProvinceIndex].name
+                }
+                if selectedCityIndex < cities.count {
+                    city = cities[selectedCityIndex].name
+                }
+                if selectedDistrictIndex < districts.count {
+                    district = districts[selectedDistrictIndex]
+                }
+                presentationMode.wrappedValue.dismiss()
+            }
+        )
+        .onAppear {
+            if let pIdx = provinces.firstIndex(where: { $0.name == province }) {
+                selectedProvinceIndex = pIdx
+                if let cIdx = provinces[pIdx].cities.firstIndex(where: { $0.name == city }) {
+                    selectedCityIndex = cIdx
+                    if let dIdx = provinces[pIdx].cities[cIdx].districts.firstIndex(of: district) {
+                        selectedDistrictIndex = dIdx
                     }
                 }
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
