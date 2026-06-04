@@ -225,6 +225,7 @@ struct ProfileView: View {
                     }
             )
         }
+        .id(router.profileNavId)
     }
 
     private var maskedPhone: String {
@@ -502,6 +503,7 @@ struct OrderCardView: View {
 // MARK: - 收货地址列表
 struct AddressListView: View {
     @EnvironmentObject var addressManager: AddressManager
+    @State private var showAddAddress = false
 
     var body: some View {
         Group {
@@ -545,11 +547,20 @@ struct AddressListView: View {
             }
         }
         .navigationBarTitle("收货地址", displayMode: .inline)
-        .navigationBarItems(trailing: NavigationLink(destination: AddAddressView { newAddress in
-            addressManager.addAddress(newAddress)
+        .navigationBarItems(trailing: Button(action: {
+            showAddAddress = true
         }) {
             Image(systemName: "plus")
         })
+        .sheet(isPresented: $showAddAddress) {
+            NavigationView {
+                AddAddressView { newAddress in
+                    addressManager.addAddress(newAddress)
+                }
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .environmentObject(addressManager)
+        }
     }
 }
 

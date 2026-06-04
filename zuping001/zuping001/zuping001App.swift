@@ -20,6 +20,8 @@ struct MainTabView: View {
                     pendingProtectedTab = newValue
                     authManager.showLoginView = true
                 } else {
+                    // 点击 Tab 时让该 Tab 的导航栈回到根页面
+                    router.popToRoot(newValue)
                     selectedTab = newValue
                 }
             }
@@ -51,18 +53,17 @@ struct MainTabView: View {
                     .tag(2)
             }
         }
+        .id(router.rootNavId)
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $authManager.showLoginView) {
             LoginView()
                 .environmentObject(authManager)
         }
-        .onReceive(router.$navigateToOrderList) { navigate in
-            if navigate {
-                // 收到跳转“我的订单”的请求时，切到个人中心 Tab。
-                // 注意：不要在此处把 navigateToOrderList 复位为 false，
-                // 该标记由 ProfileView 的 NavigationLink(isActive:) 持有，
-                // 复位会取消 OrderListView 的推入，导致页面跳不过去。
-                selectedTab = 2
+        .onReceive(router.$selectedTab) { newTab in
+            // 响应程序化 Tab 切换（如 goToOrderList）；
+            // 用户手动点 Tab 时由 tabSelection binding 处理，此处只处理 router 主动设置的情况
+            if newTab != selectedTab {
+                selectedTab = newTab
             }
         }
         .onReceive(authManager.$isLoggedIn) { isLoggedIn in

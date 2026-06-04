@@ -8,8 +8,6 @@ import SwiftUI
 struct OrderConfirmView: View {
     var product: Product?
     var cartItems: [CartItem]?
-    /// 提交成功后的回调：由调用方（详情页/购物车）在自身导航栈内“用我的订单页替换确认页”
-    var onOrderPlaced: () -> Void
 
     @EnvironmentObject var addressManager: AddressManager
     @EnvironmentObject var orderManager: OrderManager
@@ -188,7 +186,7 @@ struct OrderConfirmView: View {
                         message: Text("租赁订单已成功提交，请您耐心等候，后续工作人员将尽快与您联系对接。"),
                         dismissButton: .default(Text("确定")) {
                             if cartItems != nil { cartManager.clearCart() }
-                            onOrderPlaced()
+                            router.goToOrderList()
                         }
                     )
                 }
@@ -262,16 +260,24 @@ struct OrderItemRow: View {
 struct AddressSelectorView: View {
     @EnvironmentObject var addressManager: AddressManager
     @Binding var selectedAddress: Address?
-    @State private var showPicker = false
+    @State private var navigateToPicker = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            // 隐藏跳转链接（始终挂载，避免条件分支被销毁时 iOS 13 nav binding 失联）
+            NavigationLink(
+                destination: AddressPickerView(selectedAddress: $selectedAddress),
+                isActive: $navigateToPicker
+            ) { EmptyView() }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+
             HStack {
                 Text("收货地址")
                     .font(.headline)
                 Spacer()
                 if !addressManager.addresses.isEmpty {
-                    Button("更改地址") { showPicker = true }
+                    Button("更改地址") { navigateToPicker = true }
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }
@@ -309,47 +315,48 @@ struct AddressSelectorView: View {
                 }
             }
         }
-        .sheet(isPresented: $showPicker) {
-            NavigationView {
-                List(addressManager.addresses) { address in
-                    Button {
-                        selectedAddress = address
-                        showPicker = false
-                    } label: {
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(address.name).fontWeight(.medium)
-                                Text(address.phone).foregroundColor(.secondary)
-                                if address.isDefault {
-                                    Text("默认").font(.system(size: 11)).foregroundColor(.white)
-                                        .padding(.horizontal, 6).padding(.vertical, 2)
-                                        .background(Color.blue)
-                                        .clipShape(Capsule())
-                                }
-                                Spacer()
-                                if selectedAddress?.id == address.id {
-                                    Image(systemName: "checkmark").foregroundColor(.blue)
-                                }
-                            }
-                            Text(address.fullAddress).font(.subheadline).foregroundColor(.secondary)
+    }
+}
+
+// MARK: - 地址选择页（NavigationLink push，彻底规避 iOS 13 sheet-in-push 自动关页 bug）
+struct AddressPickerView: View {
+    @EnvironmentObject var addressManager: AddressManager
+    @Binding var selectedAddress: Address?
+    @Environment(\.presentationMode) private var presentationMode
+
+    var body: some View {
+        List(addressManager.addresses) { address in
+            Button {
+                selectedAddress = address
+                presentationMode.wrappedValue.dismiss()
+            } label: {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text(address.name).fontWeight(.medium)
+                        Text(address.phone).foregroundColor(.secondary)
+                        if address.isDefault {
+                            Text("默认").font(.system(size: 11)).foregroundColor(.white)
+                                .padding(.horizontal, 6).padding(.vertical, 2)
+                                .background(Color.blue)
+                                .clipShape(Capsule())
                         }
-                        .padding(.vertical, 4)
+                        Spacer()
+                        if selectedAddress?.id == address.id {
+                            Image(systemName: "checkmark").foregroundColor(.blue)
+                        }
                     }
-                    .foregroundColor(.primary)
+                    Text(address.fullAddress).font(.subheadline).foregroundColor(.secondary)
                 }
-                .navigationBarTitle("选择收货地址", displayMode: .inline)
-                .navigationBarItems(
-                    leading: Button("取消") { showPicker = false },
-                    trailing: NavigationLink(destination: AddAddressView { newAddress in
-                        addressManager.addAddress(newAddress)
-                        selectedAddress = newAddress
-                        showPicker = false
-                    }) {
-                        Image(systemName: "plus").foregroundColor(.blue)
-                    }
-                )
+                .padding(.vertical, 4)
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .foregroundColor(.primary)
         }
+        .navigationBarTitle("选择收货地址", displayMode: .inline)
+        .navigationBarItems(trailing: NavigationLink(destination: AddAddressView { newAddress in
+            addressManager.addAddress(newAddress)
+            selectedAddress = newAddress
+        }) {
+            Image(systemName: "plus").foregroundColor(.blue)
+        })
     }
 }

@@ -73,6 +73,7 @@ struct HomeView: View {
                     store.fetchProducts()
                 }
             }
+            .id(router.homeNavId)
     }
 }
 

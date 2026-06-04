@@ -325,11 +325,14 @@ class AddressManager: ObservableObject {
     }
     
     func addAddress(_ address: Address) {
-        var newAddr = address
-        if addresses.isEmpty {
-            newAddr.isDefault = true
+        // 新增地址设为默认，取消其他默认
+        var newAddress = address
+        newAddress.isDefault = true
+        for i in addresses.indices {
+            addresses[i].isDefault = false
         }
-        addresses.append(newAddr)
+        // 插入到列表最前面
+        addresses.insert(newAddress, at: 0)
         saveAddresses()
     }
     
@@ -537,16 +540,43 @@ class ProductStore: ObservableObject {
 class AppRouter: ObservableObject {
     static let shared = AppRouter()
     
+    @Published var selectedTab: Int = 0        // 驱动 Tab 切换
     @Published var navigateToOrderList = false
     @Published var pendingOrderListTab: Int? = 0
     @Published var showLogoutAlert = false
     @Published var showDeleteAccountAlert = false
+
+    // 各 Tab 的导航命名空间 id，改变它即可强制对应 Tab 的导航栈回到根页面
+    @Published var homeNavId: Int = 0
+    @Published var cartNavId: Int = 0
+    @Published var profileNavId: Int = 0
+
+    // 整个共享 NavigationView 的命名空间 id，改变它会把导航栈整体重建回根，
+    // 用于提交订单后彻底清除残留在栈里的"确认订单"页。
+    @Published var rootNavId: Int = 0
     
     func goToOrderList() {
+        navigateToOrderList = false
         pendingOrderListTab = 0
-        // 下一次 runloop 再激活，确保 ProfileView 已挂载后再推入 OrderListView
+        // 1. 切到"个人中心" Tab
+        selectedTab = 2
+        // 2. 重建整个导航栈到根：清掉购物车/商品详情 push 的"确认订单"页，
+        //    使最终栈为 [个人中心根]，避免返回时经过"确认订单"。
+        rootNavId &+= 1
+        // 3. 下个 runloop 再 push 我的订单（此时 ProfileView 已在新栈中挂载，
+        //    NavigationLink isActive 能可靠地从 false→true）。
         DispatchQueue.main.async {
             self.navigateToOrderList = true
+        }
+    }
+
+    /// 让指定 Tab 的导航栈回到根页面
+    func popToRoot(_ tab: Int) {
+        switch tab {
+        case 0: homeNavId &+= 1
+        case 1: cartNavId &+= 1
+        case 2: profileNavId &+= 1
+        default: break
         }
     }
 }

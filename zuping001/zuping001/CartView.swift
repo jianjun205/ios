@@ -10,8 +10,6 @@ struct CartView: View {
     @EnvironmentObject var orderManager: OrderManager
     @ObservedObject private var router = AppRouter.shared
     @State private var navigateToOrderConfirm = false
-    @State private var navigateToOrderList = false
-    @State private var checkoutItems: [CartItem] = []
 
     var body: some View {
         Group {
@@ -29,6 +27,14 @@ struct CartView: View {
                     }
                 } else {
                     VStack {
+                        // 隐藏的 NavigationLink，由结算按钮触发
+                        NavigationLink(
+                            destination: OrderConfirmView(cartItems: cartManager.items),
+                            isActive: $navigateToOrderConfirm
+                        ) { EmptyView() }
+                        .frame(width: 0, height: 0)
+                        .opacity(0)
+
                         List {
                             ForEach(cartManager.items) { item in
                                 CartItemRow(item: item)
@@ -52,8 +58,6 @@ struct CartView: View {
                             Spacer()
 
                             Button {
-                                // 快照当前购物车，避免提交后清空购物车导致订单项丢失
-                                checkoutItems = cartManager.items
                                 navigateToOrderConfirm = true
                             } label: {
                                 Text("结算(\(cartManager.itemCount))")
@@ -74,32 +78,7 @@ struct CartView: View {
                 }
             }
             .navigationBarTitle("购物车", displayMode: .inline)
-            .background(
-                // 两个跳转链接始终存在（独立于购物车空/非空状态），确保清空购物车后链接及其绑定不被销毁
-                ZStack {
-                    NavigationLink(
-                        destination: OrderConfirmView(cartItems: checkoutItems, onOrderPlaced: {
-                            // 提交成功：在本栈内用“我的订单”替换“确认订单”，返回时直接回到购物车
-                            navigateToOrderConfirm = false
-                            navigateToOrderList = true
-                        }),
-                        isActive: $navigateToOrderConfirm
-                    ) { EmptyView() }
-                    .isDetailLink(false)
-                    .frame(width: 0, height: 0)
-                    .opacity(0)
-
-                    NavigationLink(
-                        destination: OrderListView(initialTab: 0, onBack: {
-                            navigateToOrderList = false
-                        }),
-                        isActive: $navigateToOrderList
-                    ) { EmptyView() }
-                    .isDetailLink(false)
-                    .frame(width: 0, height: 0)
-                    .opacity(0)
-                }
-            )
+            .id(router.cartNavId)
     }
 }
 
