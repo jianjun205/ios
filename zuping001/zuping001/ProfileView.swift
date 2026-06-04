@@ -114,6 +114,9 @@ struct ProfileView: View {
                                 NavigationLink(destination: RentalGuideView()) {
                                     ToolQuickItem(icon: "doc.text.fill", color: .orange, title: "租赁须知")
                                 }.buttonStyle(PlainButtonStyle())
+                                NavigationLink(destination: AboutUsView()) {
+                                    ToolQuickItem(icon: "info.circle.fill", color: .purple, title: "关于我们")
+                                }.buttonStyle(PlainButtonStyle())
                             }
                             .padding(.vertical, 18)
                         }
@@ -306,9 +309,11 @@ struct ServiceBadge: View {
 struct OrderListView: View {
     @EnvironmentObject var orderManager: OrderManager
     @State var selectedTab: Int
+    var onBack: (() -> Void)? = nil
 
-    init(initialTab: Int = 0) {
+    init(initialTab: Int = 0, onBack: (() -> Void)? = nil) {
         _selectedTab = State(initialValue: initialTab)
+        self.onBack = onBack
     }
 
     private let tabs = Order.OrderStatus.allCases
@@ -381,6 +386,21 @@ struct OrderListView: View {
             .background(Color(.systemGroupedBackground))
         }
         .navigationBarTitle("我的订单", displayMode: .inline)
+        .navigationBarBackButtonHidden(onBack != nil)
+        .navigationBarItems(leading: Group {
+            if let onBack = onBack {
+                Button(action: {
+                    onBack()
+                }) {
+                    HStack(spacing: 5) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.blue)
+                        Text("返回")
+                            .foregroundColor(.blue)
+                    }
+                }
+            }
+        })
     }
 }
 
@@ -482,7 +502,6 @@ struct OrderCardView: View {
 // MARK: - 收货地址列表
 struct AddressListView: View {
     @EnvironmentObject var addressManager: AddressManager
-    @State private var showAddAddress = false
 
     var body: some View {
         Group {
@@ -526,17 +545,11 @@ struct AddressListView: View {
             }
         }
         .navigationBarTitle("收货地址", displayMode: .inline)
-        .navigationBarItems(trailing: Button(action: {
-            showAddAddress = true
+        .navigationBarItems(trailing: NavigationLink(destination: AddAddressView { newAddress in
+            addressManager.addAddress(newAddress)
         }) {
             Image(systemName: "plus")
         })
-        .sheet(isPresented: $showAddAddress) {
-            AddAddressView { newAddress in
-                addressManager.addAddress(newAddress)
-            }
-            .environmentObject(addressManager)
-        }
     }
 }
 
@@ -550,6 +563,8 @@ struct AddAddressView: View {
     @State private var district = ""
     @State private var detail = ""
     @State private var showRegionPicker = false
+    @State private var showError = false
+    @State private var errorMessage = ""
 
     var onSave: (Address) -> Void
 
@@ -565,53 +580,67 @@ struct AddAddressView: View {
         })
     }
 
+    private var isValidPhone: Bool {
+        let pattern = "^1[3-9]\\d{9}$"
+        return phone.range(of: pattern, options: .regularExpression) != nil
+    }
+
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("收货人信息")) {
-                    TextField("收货人姓名", text: $name)
-                    TextField("手机号码", text: phoneBinding)
-                        .keyboardType(.phonePad)
-                }
-
-                Section(header: Text("收货地址")) {
-                    Button {
-                        showRegionPicker = true
-                    } label: {
-                        HStack {
-                            Text("所在地区")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(regionDisplay)
-                                .foregroundColor(province.isEmpty ? .secondary : .primary)
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-
-                    TextField("详细地址", text: $detail)
-                }
+        Form {
+            Section(header: Text("收货人信息")) {
+                TextField("收货人姓名", text: $name)
+                TextField("手机号码", text: phoneBinding)
+                    .keyboardType(.phonePad)
             }
-            .navigationBarTitle("新增地址", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
-                leading: Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.blue)
-                },
-                trailing: Button("保存") {
-                    let address = Address(name: name, phone: phone, province: province, city: city, district: district, detail: detail, isDefault: false)
-                    onSave(address)
-                    presentationMode.wrappedValue.dismiss()
+
+            Section(header: Text("收货地址")) {
+                Button {
+                    showRegionPicker = true
+                } label: {
+                    HStack {
+                        Text("所在地区")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text(regionDisplay)
+                            .foregroundColor(province.isEmpty ? .secondary : .primary)
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
-                .disabled(name.isEmpty || phone.count != 11 || province.isEmpty || city.isEmpty || district.isEmpty || detail.isEmpty)
-            )
-            .sheet(isPresented: $showRegionPicker) {
-                RegionPickerView(province: $province, city: $city, district: $district)
+
+                TextField("详细地址", text: $detail)
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarTitle("新增地址", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(
+            leading: Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.blue)
+            },
+            trailing: Button("保存") {
+                if !isValidPhone {
+                    errorMessage = "请输入正确的11位格式手机号（以1开头）"
+                    showError = true
+                    return
+                }
+                let address = Address(name: name, phone: phone, province: province, city: city, district: district, detail: detail, isDefault: false)
+                onSave(address)
+                presentationMode.wrappedValue.dismiss()
+            }
+            .disabled(name.isEmpty || phone.count != 11 || province.isEmpty || city.isEmpty || district.isEmpty || detail.isEmpty)
+        )
+        .sheet(isPresented: $showRegionPicker) {
+            RegionPickerView(province: $province, city: $city, district: $district)
+        }
+        .alert(isPresented: $showError) {
+            Alert(
+                title: Text("格式错误"),
+                message: Text(errorMessage),
+                dismissButton: .default(Text("确定"))
+            )
+        }
     }
 }
 

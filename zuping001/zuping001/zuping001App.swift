@@ -58,9 +58,11 @@ struct MainTabView: View {
         }
         .onReceive(router.$navigateToOrderList) { navigate in
             if navigate {
-                // 当收到全局路由触发跳转至订单页面的请求时，切到个人中心 Tab 并清除触发标记
+                // 收到跳转“我的订单”的请求时，切到个人中心 Tab。
+                // 注意：不要在此处把 navigateToOrderList 复位为 false，
+                // 该标记由 ProfileView 的 NavigationLink(isActive:) 持有，
+                // 复位会取消 OrderListView 的推入，导致页面跳不过去。
                 selectedTab = 2
-                router.navigateToOrderList = false
             }
         }
         .onReceive(authManager.$isLoggedIn) { isLoggedIn in

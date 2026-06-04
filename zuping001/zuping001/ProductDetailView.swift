@@ -11,6 +11,7 @@ struct ProductDetailView: View {
     @EnvironmentObject var cartManager: CartManager
     @State private var showAddedAlert = false
     @State private var navigateToOrder = false
+    @State private var navigateToOrderList = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -107,9 +108,24 @@ struct ProductDetailView: View {
             // 底部操作栏
             HStack(spacing: 12) {
                 NavigationLink(
-                    destination: OrderConfirmView(product: product),
+                    destination: OrderConfirmView(product: product, onOrderPlaced: {
+                        // 提交成功：在本栈内用“我的订单”替换“确认订单”，返回时直接回到详情页
+                        navigateToOrder = false
+                        navigateToOrderList = true
+                    }),
                     isActive: $navigateToOrder
                 ) { EmptyView() }
+                .isDetailLink(false)
+                .frame(width: 0, height: 0)
+                .opacity(0)
+
+                NavigationLink(
+                    destination: OrderListView(initialTab: 0, onBack: {
+                        navigateToOrderList = false
+                    }),
+                    isActive: $navigateToOrderList
+                ) { EmptyView() }
+                .isDetailLink(false)
                 .frame(width: 0, height: 0)
                 .opacity(0)
 

@@ -353,9 +353,7 @@ class AddressManager: ObservableObject {
            let saved = try? JSONDecoder().decode([Address].self, from: data) {
             addresses = saved
         } else {
-            addresses = [
-                Address(name: "张三", phone: "13800138000", province: "北京市", city: "北京市", district: "朝阳区", detail: "科技路 100 号", isDefault: true)
-            ]
+            addresses = []
         }
     }
     
@@ -546,6 +544,9 @@ class AppRouter: ObservableObject {
     
     func goToOrderList() {
         pendingOrderListTab = 0
-        navigateToOrderList = true
+        // 下一次 runloop 再激活，确保 ProfileView 已挂载后再推入 OrderListView
+        DispatchQueue.main.async {
+            self.navigateToOrderList = true
+        }
     }
 }
