@@ -8,6 +8,202 @@
 import SwiftUI
 import Combine
 
+// MARK: - 主题与样式辅助
+struct ThemeColor {
+    static var background: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? 
+                UIColor(red: 18/255, green: 19/255, blue: 31/255, alpha: 1) : 
+                UIColor(red: 252/255, green: 249/255, blue: 243/255, alpha: 1) // 温暖慵懒奶油黄
+        })
+    }
+    
+    static var gridTexture: some View {
+        Image("NotebookPaperBackground")
+            .resizable(resizingMode: .tile)
+            .opacity(0.35)
+    }
+    
+    static var cardBackground: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? 
+                UIColor(red: 30/255, green: 33/255, blue: 49/255, alpha: 1) : 
+                UIColor.white
+        })
+    }
+    
+    static var textPrimary: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? 
+                UIColor.white : 
+                UIColor(red: 45/255, green: 41/255, blue: 38/255, alpha: 1) // 温和古铜墨黑
+        })
+    }
+    
+    static var textSecondary: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? 
+                UIColor(red: 180/255, green: 185/255, blue: 210/255, alpha: 1) : 
+                UIColor(red: 120/255, green: 115/255, blue: 110/255, alpha: 1)
+        })
+    }
+    
+    static var brandAccent: Color {
+        Color(red: 245/255, green: 110/255, blue: 125/255) // 温柔浅西桃红
+    }
+}
+
+// 拓展分类 Emoji
+extension EventCategory {
+    var cuteEmoji: String {
+        switch self {
+        case .family: return "🏡"
+        case .love: return "💖"
+        case .work: return "💼"
+        case .birthday: return "🎂"
+        case .custom: return "✨"
+        }
+    }
+    
+    var cuteGradient: LinearGradient {
+        let colors: [Color]
+        switch self {
+        case .family:
+            colors = [Color(red: 224/255, green: 238/255, blue: 255/255), Color(red: 188/255, green: 212/255, blue: 250/255)]
+        case .love:
+            colors = [Color(red: 255/255, green: 228/255, blue: 232/255), Color(red: 255/255, green: 192/255, blue: 203/255)]
+        case .work:
+            colors = [Color(red: 226/255, green: 248/255, blue: 242/255), Color(red: 190/255, green: 242/255, blue: 223/255)]
+        case .birthday:
+            colors = [Color(red: 255/255, green: 245/255, blue: 212/255), Color(red: 255/255, green: 220/255, blue: 145/255)]
+        case .custom:
+            colors = [Color(red: 244/255, green: 232/255, blue: 255/255), Color(red: 222/255, green: 192/255, blue: 255/255)]
+        }
+        return LinearGradient(gradient: Gradient(colors: colors), startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    struct GreetingMessage {
+        let title: String
+        let message: String
+    }
+    
+    var greetings: [GreetingMessage] {
+        switch self {
+        case .family:
+            return [
+                GreetingMessage(title: "🏡 团圆温情日", message: "炊烟袅袅，家人环绕。今天最温暖的港湾一直为你亮着灯盏。"),
+                GreetingMessage(title: "🏡 骨肉情深", message: "岁月的流逝带不走至亲的呼唤，今天，给家里打个最暖的电话吧。"),
+                GreetingMessage(title: "🏡 柴米油盐皆是爱", message: "日常的细碎和家人的陪伴，构筑了生命中最牢固的温存印记。"),
+                GreetingMessage(title: "🏡 至亲港湾", message: "无论走得多远，家永远是温热的避风坞，今天属于你和最亲近的他们。"),
+                GreetingMessage(title: "🏡 天伦乐事", message: "那些默默撑伞的岁月里，家人就是你背后最坚实的温柔屏障。"),
+                GreetingMessage(title: "🏡 围炉夜话", message: "哪怕只是简简单单的一餐饭，因为家人的笑脸，今天也变得无比闪耀。"),
+                GreetingMessage(title: "🏡 光阴里的牵挂", message: "父母渐白的发丝，孩子牙牙的软语，都在这一刻凝聚成无限慈爱。"),
+                GreetingMessage(title: "🏡 静好岁月", message: "愿家中灯火长明，亲人常伴左右。这杯岁月的老茶，越品越暖心。"),
+                GreetingMessage(title: "🏡 温情永存", message: "岁月在额头留下痕迹，爱却在心底建起城堡。今天，要拥抱家人哦。"),
+                GreetingMessage(title: "🏡 家和万事兴", message: "平淡生活的每一张餐桌前，都流淌着岁月给予我们最无私的馈赠。")
+            ]
+        case .love:
+            return [
+                GreetingMessage(title: "💖 喜结良期", message: "大喜日子刚好在今天！赶紧给自己放个假，尽享生活这一秒的温暖。"),
+                GreetingMessage(title: "💖 炽热心跳", message: "因为有你的存在，连拂面而过的风都裹挟着草莓味的甜腻气息。"),
+                GreetingMessage(title: "💖 专属浪漫", message: "漫步于银河，不如与你共度一个平常的日落。今天，爱意溢出了纸张。"),
+                GreetingMessage(title: "💖 相濡以沫", message: "手牵手走过的石子路，在今天化作了岁月中最斑斓的彩色相簿。"),
+                GreetingMessage(title: "💖 情书手稿", message: "千言万语，抵不过对视时眼底那抹只属于彼此的璀璨星河。"),
+                GreetingMessage(title: "💖 怦然心动", message: "每一次心动的微光，都在今天的纪念薄中，落笔成了永不褪色的红心。"),
+                GreetingMessage(title: "💖 岁月有你", message: "世界很吵，但只要看见你的笑靥，耳畔便只剩下诗般的宁静。"),
+                GreetingMessage(title: "💖 暮暮朝朝", message: "未来的每一缕清晨日光与夜半星点，我都迫不及待想与你一同拆封。"),
+                GreetingMessage(title: "💖 执子之手", message: "没有惊天动地的誓言，仅用温暖的十指相扣，便可抵御一切世间风雪。"),
+                GreetingMessage(title: "💖 甜甜的纪念", message: "把与你相遇、相识、相守的所有小细节，揉成今天最柔软的糖果。")
+            ]
+        case .work:
+            return [
+                GreetingMessage(title: "💼 进阶里程碑", message: "今天见证了你在逐梦之路上迈出的坚实一步，所有的汗水都有了回音！"),
+                GreetingMessage(title: "💼 灵感狂欢", message: "才华在指尖跃动，每一次咬牙坚持，都在今天淬炼成了无价的徽章。"),
+                GreetingMessage(title: "💼 蓄势待发", message: "披荆斩棘，不负韶华。今天，给自己一杯香浓咖啡，继续执笔宏图！"),
+                GreetingMessage(title: "💼 功不唐捐", message: "那些默默做出的努力都会在某一天破土而出，今天就是你盛开的序曲。"),
+                GreetingMessage(title: "💼 职人初心", message: "坚持理想，不被琐碎生活所磨灭。你的专注，就是世界上最酷的才华。"),
+                GreetingMessage(title: "💼 点石成金", message: "团队的默契，自我的突破。这一座沉甸甸的奖杯，你当之无愧。"),
+                GreetingMessage(title: "💼 逆风翻盘", message: "跨越低谷的人，总能看到更广袤的日出。今天，我们一起高歌猛进！"),
+                GreetingMessage(title: "💼 逐光同行", message: "既然胸中藏有璀璨群星，就无惧漫长黑夜。今天，为你的坚韧喝彩。"),
+                GreetingMessage(title: "💼 自我迭代", message: "每一次从头开始的勇气，都是通往大师境界路上最耀眼的指南针。"),
+                GreetingMessage(title: "💼 匠心独具", message: "精雕细琢每一个像素与字句。今天，请满怀骄傲地写下你的奋斗手记。")
+            ]
+        case .birthday:
+            return [
+                GreetingMessage(title: "🎂 岁岁今朝", message: "祝你生日快乐！愿你这一岁，眼里有光，心底有爱，身旁有风，前方有坦途。"),
+                GreetingMessage(title: "🎂 璀璨新生", message: "又成长了一岁，请继续肆意生长，不被世俗定义的风吹倒，做最真实的自己！"),
+                GreetingMessage(title: "🎂 烛光许愿", message: "闭上双眼，在微微摇曳的烛火中，吹散昨日烦忧，迎接一切不期而遇的惊喜。"),
+                GreetingMessage(title: "🎂 满岁礼赞", message: "收集了一年的星光与好运，在今天如期绽放。生日大吉，要天天开心哦！"),
+                GreetingMessage(title: "🎂 纯真未泯", message: "愿你出走半生，归来仍是那个吃着小蛋糕、满脸稚气对未来微笑的少年。"),
+                GreetingMessage(title: "🎂 生辰之遇", message: "感恩生活给予我们这一场名叫‘生命’的奇遇，今天你就是全世界的焦点。"),
+                GreetingMessage(title: "🎂 许我一生明媚", message: "愿生活的所有苦痛都对你绕道而行，而所有的温柔与幸运，都与你环环相扣。"),
+                GreetingMessage(title: "🎂 蛋糕上的碎碎念", message: "年年今日，岁岁今朝。吃下这一口甜，下一年保管你运势旺到飞起！"),
+                GreetingMessage(title: "🎂 逐梦年华", message: "不负成长，不负自己。每一道年轮，都是你在这个蔚蓝星球上起舞的优美轨迹。"),
+                GreetingMessage(title: "🎂 与世界初见", message: "这一天，因为你的啼哭落地而变得与众不同，今天全世界都想对你温柔微笑。")
+            ]
+        case .custom:
+            return [
+                GreetingMessage(title: "✨ 时光惊喜匣", message: "生命中所有无法归类的璀璨瞬间，都在今天如烟火般在你的脑海中灿烂盛开！"),
+                GreetingMessage(title: "✨ 打卡日常奇迹", message: "不被定义的才是最自由的。今天，让这颗小勺子般的奇迹点燃平凡的一天。"),
+                GreetingMessage(title: "✨ 浮生半日闲", message: "偷得浮生半日闲，把那些有趣、无厘头、小确幸的事，庄重地记在今天。"),
+                GreetingMessage(title: "✨ 梦幻泡泡", message: "用充满热忱的心去感知周遭，哪怕是不经意的一次偶遇，也是生活的彩色气泡。"),
+                GreetingMessage(title: "✨ 星沙拾贝", message: "大海退潮后，你捡起那颗泛着奇异彩光的贝壳。今天，把它锁进我们的木匣中。"),
+                GreetingMessage(title: "✨ 自定义好运", message: "给这一天打上一个独特的记号，它既是过去的回声，也是未来奇遇的预告片。"),
+                GreetingMessage(title: "✨ 独乐乐亦融融", message: "生活不缺宏大的命题，只缺你嘴边那一抹会微笑的弧度。今天，做个快乐的隐士。"),
+                GreetingMessage(title: "✨ 秘密花园", message: "在这里没有社交压力，只有你和这一瞬间。像猫咪一样在阳光下舒展四肢吧。"),
+                GreetingMessage(title: "✨ 光合作用", message: "在日常的忙碌和空隙间，接纳温柔的阳光。今天，你要努力地给自己充电哦！"),
+                GreetingMessage(title: "✨ 自在如风", message: "不问来路，不忧去程。在这一格里，写下只有你和时光才能看懂的密语。")
+            ]
+        }
+    }
+    
+    func randomGreeting(forEventId id: UUID) -> GreetingMessage {
+        let list = self.greetings
+        let index = abs(id.hashValue) % list.count
+        return list[index]
+    }
+}
+
+// MARK: - 去 AI 味的手绘排版组件
+
+// 卡片小节标题：用手绘荧光记号笔竖条代替 emoji 前缀
+struct SectionMarker: View {
+    let title: String
+    var color: Color = ThemeColor.brandAccent
+    var size: CGFloat = 15
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(color)
+                .frame(width: 4, height: size + 1)
+            Text(title)
+                .font(.system(size: size, weight: .bold))
+                .foregroundColor(ThemeColor.textPrimary)
+        }
+    }
+}
+
+// 页面大标题：标题文字下方手绘高亮涂抹笔触，替代 emoji 装饰
+struct HandUnderlineTitle: View {
+    let title: String
+    var color: Color = ThemeColor.brandAccent
+    var size: CGFloat = 26
+    
+    var body: some View {
+        Text(title)
+            .font(.system(size: size, weight: .bold))
+            .foregroundColor(ThemeColor.textPrimary)
+            .background(
+                color.opacity(0.18)
+                    .frame(height: size * 0.42)
+                    .cornerRadius(size * 0.21)
+                    .offset(y: size * 0.32)
+                , alignment: .bottom
+            )
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var store: EventStore
     @State private var selectedTab = 0
@@ -16,31 +212,33 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            ThemeColor.background.edgesIgnoringSafeArea(.all)
+            ThemeColor.gridTexture.edgesIgnoringSafeArea(.all)
+            
             if hasAgreedToPrivacy {
                 TabView(selection: $selectedTab) {
                     HomeListView()
                         .tabItem {
-                            Image(systemName: "clock")
-                            Text("倒计时")
+                            Image(systemName: "hourglass")
+                            Text("时光签")
                         }
                         .tag(0)
                     
                     MyCalendarView()
                         .tabItem {
                             Image(systemName: "calendar")
-                            Text("日历")
+                            Text("日历簿")
                         }
                         .tag(1)
                     
                     SettingsView()
                         .tabItem {
                             Image(systemName: "gear")
-                            Text("设置")
+                            Text("手账设")
                         }
                         .tag(2)
                 }
             } else {
-                // 首次启动强制隐私同意遮罩
                 PrivacyConsentView(onAgree: {
                     UserDefaults.standard.set(true, forKey: "hasAgreedToPrivacy")
                     withAnimation {
@@ -51,9 +249,9 @@ struct ContentView: View {
                 })
                 .alert(isPresented: $showPrivacyBlockAlert) {
                     Alert(
-                        title: Text("隐私保护知情"),
-                        message: Text("为了保证您的隐私安全，本应用完全采用离线本机存储来记录纪念日文字及图片。我们需要您阅览并同意此知情条款方可开始使用本App。"),
-                        dismissButton: .default(Text("好的，我再看看"))
+                        title: Text("温暖时光之约"),
+                        message: Text("好朋友，这是一本属于你个人的私密日程表，我们坚持100%全离线物理存储。只有同意了本条款，我们才能替你启动手账哦。"),
+                        dismissButton: .default(Text("再看看"))
                     )
                 }
             }
@@ -64,258 +262,346 @@ struct ContentView: View {
 // MARK: - 辅助：获取分类专属颜色
 func getCategoryColor(_ category: EventCategory) -> Color {
     switch category {
-    case .family: return .blue
-    case .love: return .pink
-    case .work: return .orange
-    case .birthday: return .purple
-    case .custom: return Color(red: 17/255, green: 153/255, blue: 142/255) // teal
+    case .family: return Color(red: 74/255, green: 144/255, blue: 226/255)
+    case .love: return Color(red: 240/255, green: 98/255, blue: 146/255)
+    case .work: return Color(red: 77/255, green: 182/255, blue: 172/255)
+    case .birthday: return Color(red: 186/255, green: 104/255, blue: 200/255)
+    case .custom: return Color(red: 255/255, green: 167/255, blue: 38/255)
     }
 }
 
-// MARK: - 首页：倒计时列表视图
+// MARK: - 首页：暖色倒计时卡片手账
 struct HomeListView: View {
     @EnvironmentObject var store: EventStore
     @State private var searchText = ""
     @State private var selectedCategoryFilter: EventCategory? = nil
     @State private var isShowingAddSheet = false
     
-    // 按天数和是否未来科学排序
     var filteredEvents: [Event] {
-        var list = store.events
-        
-        // 搜索名字/备注
-        if !searchText.isEmpty {
-            list = list.filter { $0.title.localizedCaseInsensitiveContains(searchText) || $0.note.localizedCaseInsensitiveContains(searchText) }
-        }
-        
-        // 分类检索过滤
-        if let filter = selectedCategoryFilter {
-            list = list.filter { $0.category == filter }
-        }
-        
-        // 排序规则：
-        // 1. 先算各事件的剩余天数。我们在 items 中，未到期/今日发生的（daysCalculation().isFuture = true）
-        //    按剩余天数升序。
-        // 2. 对于已过去的事件（daysCalculation().isFuture = false）
-        //    按已过去天数降序/升序或排在其后。为了能完美查看：我们将未发生的排在前面（按天数从小到大），已发生的排在后面（按已过去天数从小到大）。
-        return list.sorted { (e1, e2) -> Bool in
-            let calc1 = e1.daysCalculation()
-            let calc2 = e2.daysCalculation()
-            
-            if calc1.isFuture && !calc2.isFuture {
-                return true // 未发生的排在前面
-            } else if !calc1.isFuture && calc2.isFuture {
-                return false
-            } else {
-                // 相同类型，按天数绝对值排序
-                return calc1.days < calc2.days
-            }
-        }
-    }
-    
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                // 顶端搜索框
-                HStack {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.secondary)
-                        TextField("搜索纪念日、备注...", text: $searchText)
-                            .foregroundColor(.primary)
-                    }
-                    .padding(8)
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(8)
-                    
-                    if !searchText.isEmpty {
-                        Button("取消") {
-                            searchText = ""
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                
-                // 顶部分类滑动快轴
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        Button(action: {
-                            selectedCategoryFilter = nil
-                        }) {
-                            Text("全部")
-                                .font(.system(size: 13, weight: .medium))
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(selectedCategoryFilter == nil ? Color.accentColor : Color(.secondarySystemBackground))
-                                .foregroundColor(selectedCategoryFilter == nil ? .white : .primary)
-                                .cornerRadius(14)
-                        }
-                        
-                        ForEach(EventCategory.allCases) { cat in
-                            Button(action: {
-                                selectedCategoryFilter = cat
-                            }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: cat.icon)
-                                    Text(cat == .custom ? "自定义" : cat.rawValue)
-                                }
-                                .font(.system(size: 13, weight: .medium))
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(selectedCategoryFilter == cat ? getCategoryColor(cat) : Color(.secondarySystemBackground))
-                                .foregroundColor(selectedCategoryFilter == cat ? .white : .primary)
-                                .cornerRadius(14)
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
-                }
-                
-                // 事件列表或空占位图
-                if filteredEvents.isEmpty {
-                    Spacer()
-                    VStack(spacing: 12) {
-                        Image(systemName: "clock")
-                            .font(.system(size: 60))
-                            .foregroundColor(.gray)
-                        Text(searchText.isEmpty ? "还没有记录纪念日" : "未找到搜索结果")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                        Text(searchText.isEmpty ? "点击右上角“+”号添加您的首个本地纪念日" : "换个搜索词试试吧")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    }
-                    .padding()
-                    Spacer()
-                } else {
-                    List {
-                        ForEach(filteredEvents) { event in
-                            NavigationLink(destination: EventDetailView(event: event)) {
-                                EventRow(event: event)
-                            }
-                        }
-                        .onDelete(perform: deleteFromList)
-                    }
-                    .listStyle(PlainListStyle())
-                }
-            }
-            .navigationBarTitle("本地纪念日", displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button(action: {
-                    isShowingAddSheet = true
-                }) {
-                    Image(systemName: "plus")
-                        .font(.title)
-                        .padding(4)
-                }
-            )
-            .sheet(isPresented: $isShowingAddSheet) {
-                EventAddEditView()
-                    .environmentObject(store)
-            }
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
-    }
-    
-    private func deleteFromList(offsets: IndexSet) {
-        // 由于是从 filteredEvents 删除，需要找到在 store 对应的事件
-        for index in offsets {
-            let targetEvent = filteredEvents[index]
-            store.deleteEvent(targetEvent)
-        }
-    }
+         var list = store.events
+         
+         if !searchText.isEmpty {
+             list = list.filter { $0.title.localizedCaseInsensitiveContains(searchText) || $0.note.localizedCaseInsensitiveContains(searchText) }
+         }
+         
+         if let filter = selectedCategoryFilter {
+             list = list.filter { $0.category == filter }
+         }
+         
+         return list.sorted { (e1, e2) -> Bool in
+             let calc1 = e1.daysCalculation()
+             let calc2 = e2.daysCalculation()
+             
+             if calc1.isFuture && !calc2.isFuture {
+                 return true
+             } else if !calc1.isFuture && calc2.isFuture {
+                 return false
+             } else {
+                 return calc1.days < calc2.days
+             }
+         }
+     }
+     
+     var body: some View {
+         NavigationView {
+             ZStack {
+                 ThemeColor.background.edgesIgnoringSafeArea(.all)
+                 ThemeColor.gridTexture.edgesIgnoringSafeArea(.all)
+                 
+                 VStack(spacing: 0) {
+                     // 自制元气满满的插画式页头
+                     VStack(alignment: .leading, spacing: 4) {
+                         HStack {
+                             HandUnderlineTitle(title: "时光倒计时", size: 26)
+                             Spacer()
+                             Button(action: {
+                                 isShowingAddSheet = true
+                             }) {
+                                 HStack(spacing: 3) {
+                                     Image(systemName: "square.and.pencil")
+                                         .font(.system(size: 15))
+                                     Text("写手账")
+                                         .font(.system(size: 13, weight: .bold))
+                                 }
+                                 .padding(.horizontal, 12)
+                                 .padding(.vertical, 6)
+                                 .background(ThemeColor.brandAccent)
+                                 .foregroundColor(.white)
+                                 .cornerRadius(20)
+                                 .shadow(color: ThemeColor.brandAccent.opacity(0.3), radius: 4, x: 0, y: 2)
+                             }
+                         }
+                         
+                         Text("碎碎碎的时光，叠成你温柔的心愿卡。")
+                             .font(.system(size: 12))
+                             .foregroundColor(ThemeColor.textSecondary)
+                     }
+                     .padding(.horizontal)
+                     .padding(.top, 14)
+                     .padding(.bottom, 10)
+                     
+                     // 生动的手绘感搜索栏
+                     HStack {
+                         HStack {
+                             Image(systemName: "magnifyingglass")
+                                 .foregroundColor(ThemeColor.textSecondary)
+                             TextField("寻觅你记录在册的故事...", text: $searchText)
+                                 .font(.system(size: 14))
+                                 .foregroundColor(ThemeColor.textPrimary)
+                         }
+                         .padding(10)
+                         .background(ThemeColor.cardBackground)
+                         .cornerRadius(14)
+                         .shadow(color: Color.black.opacity(0.04), radius: 4, x: 0, y: 2)
+                         
+                         if !searchText.isEmpty {
+                             Button("取消") {
+                                 searchText = ""
+                             }
+                             .font(.system(size: 14))
+                             .foregroundColor(ThemeColor.brandAccent)
+                             .padding(.leading, 4)
+                         }
+                     }
+                     .padding(.horizontal)
+                     .padding(.bottom, 12)
+                     
+                     // 软萌彩色糖果检索球/豆荚
+                     ScrollView(.horizontal, showsIndicators: false) {
+                         HStack(spacing: 8) {
+                             Button(action: {
+                                 selectedCategoryFilter = nil
+                             }) {
+                                 Text("全部岁月")
+                                     .font(.system(size: 12, weight: .bold))
+                                     .padding(.horizontal, 14)
+                                     .padding(.vertical, 8)
+                                     .background(selectedCategoryFilter == nil ? ThemeColor.textPrimary : ThemeColor.cardBackground)
+                                     .foregroundColor(selectedCategoryFilter == nil ? Color(.systemBackground) : ThemeColor.textPrimary)
+                                     .cornerRadius(18)
+                                     .shadow(color: Color.black.opacity(0.03), radius: 2, y: 1)
+                             }
+                             
+                             ForEach(EventCategory.allCases) { cat in
+                                 Button(action: {
+                                     selectedCategoryFilter = cat
+                                 }) {
+                                     HStack(spacing: 4) {
+                                         Text(cat.cuteEmoji)
+                                         Text(cat == .custom ? "杂货铺" : cat.rawValue)
+                                     }
+                                     .font(.system(size: 12, weight: .bold))
+                                     .padding(.horizontal, 14)
+                                     .padding(.vertical, 8)
+                                     .background(selectedCategoryFilter == cat ? getCategoryColor(cat) : ThemeColor.cardBackground)
+                                     .foregroundColor(selectedCategoryFilter == cat ? .white : ThemeColor.textPrimary)
+                                     .cornerRadius(18)
+                                     .shadow(color: Color.black.opacity(0.03), radius: 2, y: 1)
+                                 }
+                             }
+                         }
+                         .padding(.horizontal)
+                         .padding(.bottom, 12)
+                     }
+                     
+                     // 内容展现块 (完全干掉 sterile generic List，采用 ScrollV + 卡片)
+                     if filteredEvents.isEmpty {
+                         Spacer()
+                         VStack(spacing: 16) {
+                             Image("CuteIllustrationPlaceholder")
+                                 .resizable()
+                                 .scaledToFit()
+                                 .frame(width: 100, height: 100)
+                             Text(searchText.isEmpty ? "还没有在这记下心愿~" : "时光轴上没找到这段记忆")
+                                 .font(.system(size: 16, weight: .bold))
+                                 .foregroundColor(ThemeColor.textPrimary)
+                             Text(searchText.isEmpty ? "快点击右上角“写手账”\n将属于你的本地温存封装起来吧" : "换个小词，也许就能浮现呢~")
+                                 .font(.system(size: 13))
+                                 .foregroundColor(ThemeColor.textSecondary)
+                                 .multilineTextAlignment(.center)
+                                 .lineSpacing(4)
+                         }
+                         .padding(.horizontal)
+                         Spacer()
+                     } else {
+                         ScrollView {
+                             VStack(spacing: 14) {
+                                 ForEach(filteredEvents) { event in
+                                     NavigationLink(destination: EventDetailView(event: event)) {
+                                         EventCardView(event: event)
+                                     }
+                                     .buttonStyle(PlainButtonStyle())
+                                 }
+                             }
+                             .padding(.horizontal)
+                             .padding(.top, 4)
+                             .padding(.bottom, 30)
+                         }
+                     }
+                 }
+             }
+             .navigationBarTitle("", displayMode: .inline)
+             .navigationBarHidden(true)
+             .sheet(isPresented: $isShowingAddSheet) {
+                 EventAddEditView()
+                     .environmentObject(store)
+             }
+         }
+         .navigationViewStyle(StackNavigationViewStyle())
+     }
 }
 
-// MARK: - 单行卡片 Row (iOS 13+ 适配)
-struct EventRow: View {
+// MARK: - 极具生机活力、去 AI 模板化的排贴手账卡片
+struct EventCardView: View {
     let event: Event
     
     var body: some View {
         let calc = event.daysCalculation()
         return HStack(spacing: 12) {
-            // 左边分类高亮色块圈
-            ZStack {
-                Circle()
-                    .fill(getCategoryColor(event.category).opacity(0.15))
-                    .frame(width: 44, height: 44)
-                Image(systemName: event.category.icon)
-                    .font(.system(size: 20))
-                    .foregroundColor(getCategoryColor(event.category))
-            }
+            PolaroidView(
+                uiImage: event.imageFileName != nil ? EventStore.shared.loadImage(fileName: event.imageFileName!) : nil,
+                emoji: event.category.cuteEmoji,
+                themeColor: getCategoryColor(event.category)
+            )
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack(spacing: 6) {
                     Text(event.title)
-                        .font(.headline)
-                        .foregroundColor(.primary)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(ThemeColor.textPrimary)
+                        .lineLimit(1)
+                    
                     if event.isYearlyRepeat {
-                        Image(systemName: "repeat")
-                            .font(.caption)
-                            .foregroundColor(.pink)
+                        Text("每年")
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundColor(ThemeColor.brandAccent)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 2)
+                            .background(ThemeColor.brandAccent.opacity(0.12))
+                            .cornerRadius(6)
                     }
                 }
                 
                 Text(formatDate(event.date))
-                    .font(.system(size: 13))
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 12, design: .monospaced))
+                    .foregroundColor(ThemeColor.textSecondary)
                 
                 if !event.note.isEmpty {
-                    Text(event.note)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Text("“\(event.note)”")
+                        .font(.system(size: 11))
+                        .italic()
+                        .foregroundColor(ThemeColor.textSecondary)
                         .lineLimit(1)
                 }
             }
             
             Spacer()
             
-            // 右边醒目大字
-            VStack(alignment: .trailing, spacing: 2) {
-                if calc.days == 0 {
-                    Text("今天")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundColor(.pink)
-                    Text("🎉 到了")
-                        .font(.system(size: 10))
-                        .foregroundColor(.pink)
-                } else if calc.isFuture {
-                    HStack(alignment: .lastTextBaseline, spacing: 1) {
-                        Text("\(calc.days)")
-                            .font(.system(size: 24, weight: .heavy, design: .rounded))
-                            .foregroundColor(getCategoryColor(event.category))
-                        Text("天")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    Text("倒计时")
-                        .font(.system(size: 10))
-                        .foregroundColor(.secondary)
-                } else {
-                    HStack(alignment: .lastTextBaseline, spacing: 1) {
-                        Text("\(calc.days)")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
-                            .foregroundColor(.gray)
-                        Text("天")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    Text("已过去")
-                        .font(.system(size: 10))
-                        .foregroundColor(.secondary)
-                }
-            }
+            JournalStamp(days: calc.days, isFuture: calc.isFuture, color: getCategoryColor(event.category))
         }
-        .padding(.vertical, 4)
+        .padding(14)
+        .background(event.category.cuteGradient)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 3)
     }
     
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月dd日"
+        formatter.dateFormat = "yyyy / MM / dd"
         return formatter.string(from: date)
+    }
+}
+
+// MARK: - 独一无二具有质感的小偏心拍立得
+struct PolaroidView: View {
+    let uiImage: UIImage?
+    let emoji: String
+    let themeColor: Color
+    
+    var body: some View {
+        VStack(spacing: 2) {
+            if let img = uiImage {
+                Image(uiImage: img)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 52, height: 52)
+                    .cornerRadius(6)
+                    .clipped()
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(themeColor.opacity(0.15))
+                        .frame(width: 52, height: 52)
+                    Text(emoji)
+                        .font(.system(size: 26))
+                }
+            }
+        }
+        .padding(5)
+        .padding(.bottom, 10)
+        .background(Color.white)
+        .cornerRadius(4)
+        .shadow(color: Color.black.opacity(0.08), radius: 3, x: 0, y: 1.5)
+        .rotationEffect(.degrees(-3))
+        .overlay(
+            // 使用实体绘制的高质感和纹纸胶带 NotebookTape，彻底打碎白胶带的AI干瘪扁平感
+            Image("NotebookTape")
+                .resizable()
+                .frame(width: 38, height: 16)
+                .offset(y: -32)
+        )
+    }
+}
+
+// MARK: - 精致的手账虚线邮票封签 Stamp
+struct JournalStamp: View {
+    let days: Int
+    let isFuture: Bool
+    let color: Color
+    
+    var body: some View {
+        VStack(spacing: 3) {
+            if days == 0 {
+                Text("TODAY")
+                    .font(.system(size: 8, weight: .bold, design: .monospaced))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 2)
+                    .background(Color.pink)
+                    .cornerRadius(4)
+                
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 15))
+                    .foregroundColor(.pink)
+                
+                Text("就在今朝")
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundColor(.pink)
+            } else {
+                Text(isFuture ? "COMING" : "PAST")
+                    .font(.system(size: 8, weight: .bold, design: .monospaced))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 2)
+                    .background(isFuture ? color : Color.gray)
+                    .cornerRadius(4)
+                
+                Text("\(days)")
+                    .font(.system(size: 24, weight: .heavy, design: .rounded))
+                    .foregroundColor(isFuture ? Color(red: 45/255, green: 41/255, blue: 38/255) : Color.secondary)
+                
+                Text(isFuture ? "天后到" : "天已往")
+                    .font(.system(size: 8, weight: .bold))
+                    .foregroundColor(.secondary)
+            }
+        }
+        .frame(width: 62, height: 72)
+        .background(Color.white.opacity(0.85))
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(isFuture ? color.opacity(0.4) : Color.gray.opacity(0.4), style: StrokeStyle(lineWidth: 1.5, dash: [4]))
+        )
     }
 }
 
@@ -326,171 +612,220 @@ struct EventDetailView: View {
     let event: Event
     
     @State private var isShowingEditSheet = false
-    @State private var loadedImage: UIImage? = nil
     
     var body: some View {
         let calc = event.daysCalculation()
         let catColor = getCategoryColor(event.category)
         
-        return ScrollView {
-            VStack(spacing: 20) {
-                // 倒计时核心大卡片
-                VStack(spacing: 12) {
-                    Text(event.title)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                    
-                    HStack(spacing: 6) {
-                        Image(systemName: event.category.icon)
-                        Text(event.displayCategoryName)
-                        if event.isYearlyRepeat {
-                            Text("· 每年重复")
-                        }
-                    }
-                    .font(.subheadline)
-                    .foregroundColor(catColor)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 4)
-                    .background(catColor.opacity(0.12))
-                    .cornerRadius(12)
-                    
-                    Divider().padding(.horizontal)
-                    
-                    if calc.days == 0 {
-                        Text("就是今天！")
-                            .font(.system(size: 42, weight: .black, design: .rounded))
-                            .foregroundColor(.pink)
-                        Text("祝您在这快乐的一天诸事顺意 🎉")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    } else {
-                        VStack(spacing: 4) {
-                            Text("\(calc.days)")
-                                .font(.system(size: 64, weight: .heavy, design: .rounded))
-                                .foregroundColor(calc.isFuture ? catColor : .gray)
-                            
-                            Text(calc.isFuture ? "距离大纪念日还有今天起算的天数" : "距离该时刻已悄然流逝")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text(calc.isFuture ? "倒计时天" : "累计纪念天")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(calc.isFuture ? .primary : .secondary)
-                        }
-                    }
-                    
-                    Text("目标发生日: \(formatDate(event.date))")
-                        .font(.system(size: 14))
-                        .foregroundColor(.gray)
-                        .padding(.top, 4)
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(16)
-                .padding(.horizontal)
-                
-                // 备注大框卡片
-                if !event.note.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
+        return ZStack {
+            ThemeColor.background.edgesIgnoringSafeArea(.all)
+            ThemeColor.gridTexture.edgesIgnoringSafeArea(.all)
+            
+            ScrollView {
+                VStack(spacing: 20) {
+                    // 页顶撕纸效果卡片
+                    VStack(spacing: 16) {
                         HStack {
-                            Image(systemName: "note.text")
-                                .foregroundColor(catColor)
-                            Text("事件备忘")
-                                .font(.headline)
-                                .foregroundColor(.primary)
+                            Text(event.category.cuteEmoji)
+                                .font(.system(size: 32))
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(event.title)
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundColor(ThemeColor.textPrimary)
+                                Text("备档归类：\(event.displayCategoryName)")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                            }
+                            Spacer()
                         }
-                        Text(event.note)
-                            .font(.body)
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(16)
-                    .padding(.horizontal)
-                }
-                
-                // 本地关联的私密照片 (如果有)
-                if let imgFileName = event.imageFileName, let img = store.loadImage(fileName: imgFileName) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Image(systemName: "photo.fill")
-                                .foregroundColor(catColor)
-                            Text("本地私密附图")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                        }
-                        Image(uiImage: img)
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(12)
-                            .frame(maxWidth: .infinity)
-                            .shadow(radius: 4)
                         
-                        Text("🔒 图片完全物理保存在您的本机沙盒中，未加载第三方同步，不占用任何云存储。")
-                            .font(.system(size: 11))
-                            .foregroundColor(.gray)
-                            .padding(.top, 4)
+                        Divider()
+                            .background(Color.gray.opacity(0.15))
+                        
+                        if calc.days == 0 {
+                            let greeting = event.category.randomGreeting(forEventId: event.id)
+                            VStack(spacing: 12) {
+                                Text(greeting.title)
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundColor(getCategoryColor(event.category))
+                                Text(greeting.message)
+                                    .font(.system(size: 13))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                            }
+                            .padding(.vertical, 14)
+                        } else {
+                            VStack(spacing: 6) {
+                                Text(calc.isFuture ? "还有" : "已经远去")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                                
+                                Text("\(calc.days)")
+                                    .font(.system(size: 68, weight: .black, design: .rounded))
+                                    .foregroundColor(calc.isFuture ? catColor : .gray)
+                                    .shadow(color: calc.isFuture ? catColor.opacity(0.2) : Color.clear, radius: 6, y: 3)
+                                
+                                Text("个日落晨曦")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                            }
+                            .padding(.vertical, 8)
+                        }
+                        
+                        HStack(spacing: 4) {
+                            Image(systemName: "calendar")
+                            Text("日期指针: \(formatDate(event.date))")
+                        }
+                        .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 5)
+                        .background(Color.black.opacity(0.04))
+                        .cornerRadius(10)
+                        .foregroundColor(ThemeColor.textSecondary)
                     }
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(16)
-                    .padding(.horizontal)
-                }
-                
-                // 通知提醒指示
-                HStack(spacing: 12) {
-                    Image(systemName: event.isNotificationEnabled ? "bell.badge.fill" : "bell.slash")
-                        .foregroundColor(event.isNotificationEnabled ? .orange : .gray)
-                        .font(.system(size: 18))
+                    .padding(20)
+                    .background(ThemeColor.cardBackground)
+                    .cornerRadius(24)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 4)
+                    .padding(.top, 14)
                     
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(event.isNotificationEnabled ? "本地消息提醒已开启" : "本事件未开启通知")
-                            .font(.subheadline)
-                            .foregroundColor(.primary)
-                        if event.isNotificationEnabled {
-                            let textOffset = event.notificationTimeOffset == 0 ? "当天 (09:00)" : "提前 \(event.notificationTimeOffset) 天"
-                            Text("将在发生日 \(textOffset) 通过系统通道发送通知")
-                                .font(.system(size: 11))
-                                .foregroundColor(.secondary)
+                    // 写意备注纸 (Torn Paper Note)
+                    if !event.note.isEmpty {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Text("✍️ 心情备忘")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(ThemeColor.textPrimary)
+                                Spacer()
+                            }
+                            Text(event.note)
+                                .font(.system(size: 14))
+                                .foregroundColor(ThemeColor.textPrimary)
+                                .lineSpacing(6)
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(
+                                    ZStack {
+                                        Color(red: 255/255, green: 253/255, blue: 233/255) // 浅黄便签纸
+                                        VStack {
+                                            ForEach(0..<8) { _ in
+                                                Divider().background(Color.blue.opacity(0.04))
+                                                Spacer()
+                                            }
+                                        }
+                                    }
+                                )
+                                .cornerRadius(12)
+                                .shadow(color: Color.black.opacity(0.03), radius: 3, x: 0, y: 2)
+                        }
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(24)
+                        .shadow(color: Color.black.opacity(0.04), radius: 8, y: 4)
+                    }
+                    
+                    // 物理克隆本地存照 (拍立得写意框)
+                    if let imgFileName = event.imageFileName, let img = store.loadImage(fileName: imgFileName) {
+                        VStack(spacing: 12) {
+                            HStack {
+                                Text("📷 独家时光切影")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(ThemeColor.textPrimary)
+                                Spacer()
+                            }
+                            
+                            VStack(spacing: 8) {
+                                Image(uiImage: img)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(8)
+                                    .padding(10)
+                                    .background(Color.white)
+                                    .shadow(color: Color.black.opacity(0.1), radius: 4)
+                                
+                                Text("“记录，是抗拒生命遗忘的最佳仪式”")
+                                    .font(.system(size: 11, weight: .light))
+                                    .foregroundColor(Color.gray)
+                                    .padding(.bottom, 6)
+                            }
+                            .padding(8)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                            .rotationEffect(.degrees(1.5))
+                            .padding(.vertical, 8)
+                            
+                            HStack(spacing: 4) {
+                                Image(systemName: "lock.fill")
+                                    .font(.system(size: 9))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                                Text("纯物理沙盒，未加载外部图床、100%安全")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                            }
+                        }
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(24)
+                        .shadow(color: Color.black.opacity(0.04), radius: 8, y: 4)
+                    }
+                    
+                    // 铃声提醒信息
+                    HStack(spacing: 12) {
+                        Image(systemName: "bell.fill")
+                            .foregroundColor(event.isNotificationEnabled ? .orange : Color.gray.opacity(0.5))
+                            .font(.system(size: 20))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(event.isNotificationEnabled ? "该纪念日将在当日弹出通知" : "本卡片处于静音时光轴")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(ThemeColor.textPrimary)
+                            if event.isNotificationEnabled {
+                                let offset = event.notificationTimeOffset == 0 ? "事件当天早上 09:00" : "提前 \(event.notificationTimeOffset) 天早上 09:00"
+                                Text("系统推送队列已排定: \(offset)")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(ThemeColor.textSecondary)
+                            }
+                        }
+                        Spacer()
+                    }
+                    .padding(18)
+                    .background(ThemeColor.cardBackground)
+                    .cornerRadius(24)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, y: 4)
+                    
+                    // 合而为一的按钮组
+                    VStack(spacing: 12) {
+                        Button(action: {
+                            store.deleteEvent(event)
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "trash")
+                                Text("丢弃这张时光签")
+                            }
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Color.red.opacity(0.08))
+                            .cornerRadius(18)
                         }
                     }
-                    Spacer()
-                }
-                .padding()
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(16)
-                .padding(.horizontal)
-                
-                // 删除动作
-                Button(action: {
-                    store.deleteEvent(event)
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "trash")
-                        Text("删除该条纪念日记录")
-                            .font(.system(size: 16, weight: .medium))
-                    }
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.red)
-                    .cornerRadius(12)
+                    .padding(.top, 14)
+                    .padding(.bottom, 40)
                 }
                 .padding(.horizontal)
-                .padding(.top, 10)
-                .padding(.bottom, 30)
             }
         }
-        .navigationBarTitle("纪念日详情", displayMode: .inline)
+        .navigationBarTitle("手账卡明细", displayMode: .inline)
         .navigationBarItems(trailing:
-            Button("编辑") {
+            Button("编辑卡片") {
                 isShowingEditSheet = true
             }
+            .font(.system(size: 14, weight: .bold))
+            .foregroundColor(ThemeColor.brandAccent)
         )
         .sheet(isPresented: $isShowingEditSheet) {
             EventAddEditView(editingEvent: event)
@@ -500,12 +835,12 @@ struct EventDetailView: View {
     
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月dd日"
+        formatter.dateFormat = "yyyy 年 MM 月 dd 日"
         return formatter.string(from: date)
     }
 }
 
-// MARK: - 纪念日新增/编辑页面
+// MARK: - 纪念日添加与编辑纸张
 struct EventAddEditView: View {
     @EnvironmentObject var store: EventStore
     @Environment(\.presentationMode) var presentationMode
@@ -556,113 +891,176 @@ struct EventAddEditView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("纪念日基本内容 (必填)")) {
-                    TextField("事件名称，如：妈妈生日、恋爱纪念日...", text: $title)
-                    
-                    DatePicker("发生日期", selection: $date, displayedComponents: .date)
-                    
-                    Toggle(isOn: $isYearlyRepeat) {
-                        HStack {
-                            Image(systemName: "repeat")
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("每年重复")
-                                    .font(.subheadline)
-                                Text("开启后，倒计时次年将自动重计日期")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                    }
-                }
+            ZStack {
+                ThemeColor.background.edgesIgnoringSafeArea(.all)
+                ThemeColor.gridTexture.edgesIgnoringSafeArea(.all)
                 
-                Section(header: Text("分类归属")) {
-                    Picker("挑选所属类别", selection: $category) {
-                        ForEach(EventCategory.allCases) { cat in
-                            Text(cat.rawValue).tag(cat)
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    
-                    if category == .custom {
-                        TextField("写一个您的个性化分类 (如：开学、理财...)", text: $customCategoryName)
-                    }
-                }
-                
-                Section(header: Text("本地附图 (离线、安全、不可批量)")) {
-                    HStack {
-                        if let img = selectedImage {
-                            Image(uiImage: img)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 80, height: 80)
-                                .cornerRadius(8)
-                                .clipped()
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // 1. 卡片一：起名字
+                        VStack(alignment: .leading, spacing: 12) {
+                            SectionMarker(title: "时光签主题", size: 13)
                             
-                            Button(action: {
-                                selectedImage = nil
-                            }) {
-                                Text("移除照片")
-                                    .font(.caption)
-                                    .foregroundColor(.red)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        } else {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Button(action: {
-                                    isImagePickerPresented = true
-                                }) {
-                                    HStack {
-                                        Image(systemName: "photo.on.rectangle")
-                                        Text("添加本地私密相册图")
-                                    }
-                                    .foregroundColor(.accentColor)
+                            TextField("妈妈生日、恋爱纪念、买猫猫一周年...", text: $title)
+                                .font(.system(size: 15))
+                                .padding()
+                                .background(ThemeColor.background)
+                                .cornerRadius(12)
+                            
+                            DatePicker("设定吉日", selection: $date, displayedComponents: .date)
+                                .font(.system(size: 15))
+                                .padding(.vertical, 4)
+                            
+                            Toggle(isOn: $isYearlyRepeat) {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("每年循环计时")
+                                        .font(.system(size: 15, weight: .bold))
+                                        .foregroundColor(ThemeColor.textPrimary)
+                                    Text("开启后它能自动为你转进到下一年度的今日哦")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(ThemeColor.textSecondary)
                                 }
-                                Text("图片绝不联网，仅在您手机物理沙盒中归档。单个事件仅能选一张。")
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.secondary)
                             }
                         }
-                    }
-                    .padding(.vertical, 4)
-                }
-                
-                Section(header: Text("本地消息提醒规则 (不使用网络)")) {
-                    Toggle(isOn: $isNotificationEnabled) {
-                        HStack {
-                            Image(systemName: "bell.fill")
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("倒计时到期提醒")
-                                    .font(.subheadline)
-                                Text("到期当天自动在手机弹出提醒通知")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(22)
+                        .shadow(color: Color.black.opacity(0.03), radius: 5, y: 2)
+                        
+                        // 2. 卡片二：挑选信封归纳
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("📦 分纳封套")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(ThemeColor.textSecondary)
+                            
+                            Picker("挑选所属类别", selection: $category) {
+                                ForEach(EventCategory.allCases) { cat in
+                                    Text(cat.cuteEmoji + " " + cat.rawValue).tag(cat)
+                                }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            
+                            if category == .custom {
+                                TextField("写个专属的杂货标签 (如：开学/种花)...", text: $customCategoryName)
+                                    .padding()
+                                    .background(ThemeColor.background)
+                                    .cornerRadius(12)
                             }
                         }
-                    }
-                    
-                    if isNotificationEnabled {
-                        Picker("提前提醒时间", selection: $notificationTimeOffset) {
-                            Text("当天提醒").tag(0)
-                            Text("提前1天提醒").tag(1)
-                            Text("提前3天提醒").tag(3)
-                            Text("提前1周提醒").tag(7)
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(22)
+                        .shadow(color: Color.black.opacity(0.03), radius: 5, y: 2)
+                        
+                        // 3. 卡片三：照片克隆
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("📸 独家时光切片 (仅限一张、不连任何云)")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(ThemeColor.textSecondary)
+                            
+                            HStack {
+                                if let img = selectedImage {
+                                    VStack(spacing: 8) {
+                                        Image(uiImage: img)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(10)
+                                            .clipped()
+                                        
+                                        Button("清除放回") {
+                                            selectedImage = nil
+                                        }
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundColor(.red)
+                                    }
+                                } else {
+                                    Button(action: {
+                                        isImagePickerPresented = true
+                                    }) {
+                                        VStack(spacing: 8) {
+                                            Image(systemName: "camera.fill")
+                                                .font(.system(size: 24))
+                                            Text("贴上记忆快照 (相册贴图)")
+                                                .font(.system(size: 12, weight: .bold))
+                                        }
+                                        .foregroundColor(ThemeColor.brandAccent)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 24)
+                                        .background(ThemeColor.background)
+                                        .cornerRadius(14)
+                                    }
+                                }
+                            }
                         }
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(22)
+                        .shadow(color: Color.black.opacity(0.03), radius: 5, y: 2)
+                        
+                        // 4. 卡片四：闹钟
+                        VStack(alignment: .leading, spacing: 12) {
+                            SectionMarker(title: "本地到点传书提醒 (全离线)", size: 13)
+                            
+                            Toggle(isOn: $isNotificationEnabled) {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("倒计时到期提醒我")
+                                        .font(.system(size: 15))
+                                    Text("不依托互联网，纯系统引擎分发安全静谧")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(ThemeColor.textSecondary)
+                                }
+                            }
+                            
+                            if isNotificationEnabled {
+                                Picker("何时传书", selection: $notificationTimeOffset) {
+                                    Text("当天 早上 09:00 提醒").tag(0)
+                                    Text("提前 1 天发出预告").tag(1)
+                                    Text("提前 3 天做好筹备").tag(3)
+                                    Text("提前一整周呼唤").tag(7)
+                                }
+                                .pickerStyle(WheelPickerStyle())
+                                .frame(height: 80)
+                                .clipped()
+                            }
+                        }
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(22)
+                        .shadow(color: Color.black.opacity(0.03), radius: 5, y: 2)
+                        
+                        // 5. 卡片五：碎碎念念
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("💌 拾遗碎语")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(ThemeColor.textSecondary)
+                            
+                            TextField("有何回忆备注？例如地点、或礼物秘密清单...", text: $note)
+                                .font(.system(size: 14))
+                                .padding()
+                                .background(ThemeColor.background)
+                                .cornerRadius(12)
+                        }
+                        .padding(18)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(22)
+                        .shadow(color: Color.black.opacity(0.03), radius: 5, y: 2)
                     }
-                }
-                
-                Section(header: Text("附加备注说明")) {
-                    TextField("补充一些文字备注，如地点、回忆点或需要准备的礼物...", text: $note)
+                    .padding()
                 }
             }
-            .navigationBarTitle(isEditMode ? "编辑纪念日" : "新增纪念日", displayMode: .inline)
+            .navigationBarTitle(isEditMode ? "修补手账时光签" : "新建手账时光签", displayMode: .inline)
             .navigationBarItems(
-                leading: Button("取消") {
+                leading: Button("撤销") {
                     presentationMode.wrappedValue.dismiss()
-                },
-                trailing: Button("保存") {
+                }
+                .font(.system(size: 14, weight: .bold))
+                .foregroundColor(ThemeColor.textSecondary),
+                trailing: Button("封贴保存") {
                     saveAction()
                 }
+                .font(.system(size: 14, weight: .bold))
+                .foregroundColor(ThemeColor.brandAccent)
                 .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             )
             .sheet(isPresented: $isImagePickerPresented) {
@@ -691,7 +1089,6 @@ struct EventAddEditView: View {
         let targetCustomName = category == .custom ? (customCategoryName.isEmpty ? "自定义" : customCategoryName) : nil
         
         if let editing = editingEvent {
-            // 编辑已有事件
             let updated = Event(
                 id: editing.id,
                 title: title,
@@ -705,14 +1102,12 @@ struct EventAddEditView: View {
                 isYearlyRepeat: isYearlyRepeat
             )
             
-            // 如果用户关闭了通知，则我们顺带取消
             if !isNotificationEnabled {
                 store.cancelNotification(for: editing)
             }
             
             store.updateEvent(updated, image: selectedImage)
         } else {
-            // 新建一事件
             let newObj = Event(
                 id: UUID(),
                 title: title,
@@ -726,11 +1121,8 @@ struct EventAddEditView: View {
                 isYearlyRepeat: isYearlyRepeat
             )
             
-            // 提醒权限请求辅助：如果开启了通知
             if isNotificationEnabled {
-                store.requestNotificationPermission { granted in
-                    // 仅获取权限，内部不作侵入式强退
-                }
+                store.requestNotificationPermission { granted in }
             }
             
             store.addEvent(newObj, image: selectedImage)
@@ -740,7 +1132,7 @@ struct EventAddEditView: View {
     }
 }
 
-// MARK: - 精致纯本土月历日历
+// MARK: - 纸张插孔式复古日历簿
 struct MyCalendarView: View {
     @EnvironmentObject var store: EventStore
     @State private var currentMonth: Date = Date()
@@ -751,16 +1143,13 @@ struct MyCalendarView: View {
     private let calendar = Calendar.current
     private let weekdays = ["日", "一", "二", "三", "四", "五", "六"]
     
-    // 筛选选中日期当天的所有本地事件
     var eventsOnSelectedDate: [Event] {
         return store.events.filter { event in
             if event.isYearlyRepeat {
-                // 每年重复：只要选择的月和日对上
                 let eventComp = calendar.dateComponents([.month, .day], from: event.date)
                 let selectedComp = calendar.dateComponents([.month, .day], from: selectedDate)
                 return eventComp.month == selectedComp.month && eventComp.day == selectedComp.day
             } else {
-                // 一次性：精确对比年月日
                 return calendar.isDate(event.date, inSameDayAs: selectedDate)
             }
         }
@@ -768,181 +1157,214 @@ struct MyCalendarView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 16) {
-                    // 月份导航切换栏
-                    HStack {
-                        Button(action: {
-                            changeMonth(by: -1)
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 20))
-                                .padding(10)
+            ZStack {
+                ThemeColor.background.edgesIgnoringSafeArea(.all)
+                ThemeColor.gridTexture.edgesIgnoringSafeArea(.all)
+                
+                ScrollView {
+                    VStack(spacing: 16) {
+                        // 日历大标题区
+                        VStack(alignment: .leading, spacing: 4) {
+                            HandUnderlineTitle(title: "岁月日历簿", size: 24)
+                            Text("每一格，都是时光停留过的港湾。")
+                                .font(.system(size: 12))
+                                .foregroundColor(ThemeColor.textSecondary)
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                        .padding(.top, 14)
                         
-                        Spacer()
-                        
-                        Text(formatMonthYear(currentMonth))
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            changeMonth(by: 1)
-                        }) {
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 20))
-                                .padding(10)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(12)
-                    .padding(.horizontal)
-                    
-                    // 星期表头
-                    HStack(spacing: 0) {
-                        ForEach(weekdays, id: \.self) { day in
-                            Text(day)
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(.secondary)
-                                .frame(maxWidth: .infinity)
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    // 6x7 纯 SwiftUI 兼容月历方格网
-                    VStack(spacing: 10) {
-                        ForEach(0..<6, id: \.self) { row in
-                            HStack(spacing: 0) {
-                                ForEach(0..<7, id: \.self) { col in
-                                    let index = row * 7 + col
-                                    let datesList = daysInMonth()
-                                    
-                                    if index < datesList.count, let date = datesList[index] {
-                                        let isSelected = calendar.isDate(date, inSameDayAs: selectedDate)
-                                        let isToday = calendar.isDateInToday(date)
-                                        let dayEvents = eventsForDate(date)
-                                        
-                                        Button(action: {
-                                            selectedDate = date
-                                        }) {
-                                            VStack(spacing: 2) {
-                                                Text("\(calendar.component(.day, from: date))")
-                                                    .font(.system(size: 16, weight: isSelected ? .bold : .regular))
-                                                    .foregroundColor(isSelected ? .white : (isToday ? .pink : .primary))
-                                                    .frame(width: 34, height: 34)
-                                                    .background(isSelected ? Color.accentColor : (isToday ? Color.pink.opacity(0.1) : Color.clear))
-                                                    .clipShape(Circle())
-                                                
-                                                // 格子小彩点标识 (如有事件)
-                                                HStack(spacing: 3) {
-                                                    if !dayEvents.isEmpty {
-                                                        ForEach(dayEvents.prefix(3)) { ev in
-                                                            Circle()
-                                                                .fill(getCategoryColor(ev.category))
-                                                                .frame(width: 5, height: 5)
-                                                        }
-                                                    } else {
-                                                        Spacer().frame(height: 5)
-                                                    }
-                                                }
-                                            }
-                                            .frame(maxWidth: .infinity)
-                                        }
-                                        .buttonStyle(PlainButtonStyle())
-                                    } else {
-                                        // 填充上月/下月非本月区域留白
-                                        Text("")
-                                            .frame(maxWidth: .infinity)
-                                            .frame(height: 41)
-                                    }
-                                }
+                        // 暖心活泼的月份翻页牌
+                        HStack {
+                            Button(action: { changeMonth(by: -1) }) {
+                                Image(systemName: "chevron.left")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(ThemeColor.brandAccent)
+                                    .frame(width: 36, height: 36)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                                    .shadow(color: Color.black.opacity(0.04), radius: 2)
+                            }
+                            
+                            Spacer()
+                            
+                            Text(formatMonthYear(currentMonth))
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundColor(ThemeColor.textPrimary)
+                            
+                            Spacer()
+                            
+                            Button(action: { changeMonth(by: 1) }) {
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(ThemeColor.brandAccent)
+                                    .frame(width: 36, height: 36)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                                    .shadow(color: Color.black.opacity(0.04), radius: 2)
                             }
                         }
-                    }
-                    .padding(.horizontal)
-                    
-                    Divider().padding(.horizontal)
-                    
-                    // 下方当天纪念日卡片面板
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Image(systemName: "calendar")
-                                .foregroundColor(.pink)
-                            Text("\(formatShortDate(selectedDate)) 记录")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                            Spacer()
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(18)
+                        .shadow(color: Color.black.opacity(0.02), radius: 3)
+                        .padding(.horizontal)
+                        
+                        // 星期指示表头
+                        HStack(spacing: 0) {
+                            ForEach(weekdays, id: \.self) { day in
+                                Text(day)
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundColor(day == "日" || day == "六" ? ThemeColor.brandAccent : ThemeColor.textSecondary)
+                                    .frame(maxWidth: .infinity)
+                            }
                         }
                         .padding(.horizontal)
                         
-                        if eventsOnSelectedDate.isEmpty {
-                            VStack(spacing: 8) {
-                                Text("本日尚未录入生活纪念日")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                
-                                Button(action: {
-                                    isShowingAddSheet = true
-                                }) {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: "plus.circle")
-                                        Text("添加这一天的重要节点")
-                                    }
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 16)
-                                    .background(Color.accentColor)
-                                    .cornerRadius(20)
-                                }
-                                .padding(.top, 4)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(12)
-                            .padding(.horizontal)
-                        } else {
-                            ForEach(eventsOnSelectedDate) { ev in
-                                Button(action: {
-                                    showingDetailEvent = ev
-                                }) {
-                                    HStack {
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            HStack {
-                                                Image(systemName: ev.category.icon)
-                                                    .foregroundColor(getCategoryColor(ev.category))
-                                                Text(ev.title)
-                                                    .font(.headline)
-                                                    .foregroundColor(.primary)
+                        // 极具质感的日历排片格网 (Paper desktop grid style)
+                        VStack(spacing: 12) {
+                            ForEach(0..<6, id: \.self) { row in
+                                HStack(spacing: 0) {
+                                    ForEach(0..<7, id: \.self) { col in
+                                        let index = row * 7 + col
+                                        let datesList = daysInMonth()
+                                        
+                                        if index < datesList.count, let date = datesList[index] {
+                                            let isSelected = calendar.isDate(date, inSameDayAs: selectedDate)
+                                            let isToday = calendar.isDateInToday(date)
+                                            let dayEvents = eventsForDate(date)
+                                            
+                                            Button(action: { selectedDate = date }) {
+                                                VStack(spacing: 4) {
+                                                    // 选定高亮效果：手写本圆圈涂鸦质感
+                                                    Text("\(calendar.component(.day, from: date))")
+                                                        .font(.system(size: 15, weight: isSelected || isToday ? .bold : .medium, design: .rounded))
+                                                        .foregroundColor(isSelected ? .white : (isToday ? ThemeColor.brandAccent : ThemeColor.textPrimary))
+                                                        .frame(width: 32, height: 32)
+                                                        .background(
+                                                            ZStack {
+                                                                if isSelected {
+                                                                    ThemeColor.brandAccent
+                                                                } else if isToday {
+                                                                    ThemeColor.brandAccent.opacity(0.12)
+                                                                } else {
+                                                                    Color.clear
+                                                                }
+                                                            }
+                                                        )
+                                                        .clipShape(Circle())
+                                                    
+                                                    // 极其生动可爱的彩底指示点
+                                                    HStack(spacing: 3) {
+                                                        if !dayEvents.isEmpty {
+                                                            ForEach(dayEvents.prefix(3)) { ev in
+                                                                Circle()
+                                                                    .fill(getCategoryColor(ev.category))
+                                                                    .frame(width: 4, height: 4)
+                                                            }
+                                                        } else {
+                                                            Spacer().frame(height: 4)
+                                                        }
+                                                    }
+                                                }
+                                                .frame(maxWidth: .infinity)
                                             }
-                                            if !ev.note.isEmpty {
-                                                Text(ev.note)
-                                                    .font(.caption)
-                                                    .foregroundColor(.secondary)
-                                            }
+                                            .buttonStyle(PlainButtonStyle())
+                                        } else {
+                                            Text("")
+                                                .frame(maxWidth: .infinity)
+                                                .frame(height: 38)
                                         }
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(.gray)
                                     }
-                                    .padding()
-                                    .background(Color(.secondarySystemBackground))
-                                    .cornerRadius(12)
-                                    .padding(.horizontal)
                                 }
-                                .buttonStyle(PlainButtonStyle())
                             }
                         }
+                        .padding(14)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(24)
+                        .shadow(color: Color.black.opacity(0.03), radius: 6, y: 3)
+                        .padding(.horizontal)
+                        
+                        Divider().padding(.horizontal).padding(.vertical, 4)
+                        
+                        // 下方日记页底当选行程
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack(spacing: 6) {
+                                SectionMarker(title: "\(formatShortDate(selectedDate)) 时光事件录", size: 15)
+                                Spacer()
+                            }
+                            .padding(.horizontal)
+                            
+                            if eventsOnSelectedDate.isEmpty {
+                                VStack(spacing: 12) {
+                                    Image(systemName: "leaf")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(ThemeColor.brandAccent.opacity(0.6))
+                                    Text("这天平静安宁，时光轴上未有心事。")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(ThemeColor.textSecondary)
+                                    
+                                    Button(action: { isShowingAddSheet = true }) {
+                                        Text("在此处打卡新签")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical, 8)
+                                            .background(ThemeColor.brandAccent)
+                                            .cornerRadius(16)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 20)
+                                .background(ThemeColor.cardBackground)
+                                .cornerRadius(20)
+                                .shadow(color: Color.black.opacity(0.015), radius: 4)
+                                .padding(.horizontal)
+                            } else {
+                                ForEach(eventsOnSelectedDate) { ev in
+                                    Button(action: { showingDetailEvent = ev }) {
+                                        HStack(spacing: 12) {
+                                            ZStack {
+                                                Circle()
+                                                    .fill(getCategoryColor(ev.category).opacity(0.12))
+                                                    .frame(width: 36, height: 36)
+                                                Text(ev.category.cuteEmoji)
+                                                    .font(.system(size: 16))
+                                            }
+                                            
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(ev.title)
+                                                    .font(.system(size: 14, weight: .bold))
+                                                    .foregroundColor(ThemeColor.textPrimary)
+                                                if !ev.note.isEmpty {
+                                                    Text(ev.note)
+                                                        .font(.system(size: 11))
+                                                        .foregroundColor(ThemeColor.textSecondary)
+                                                        .lineLimit(1)
+                                                }
+                                            }
+                                            Spacer()
+                                            Image(systemName: "chevron.right")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(ThemeColor.textSecondary)
+                                        }
+                                        .padding()
+                                        .background(ThemeColor.cardBackground)
+                                        .cornerRadius(18)
+                                        .shadow(color: Color.black.opacity(0.02), radius: 3, y: 1.5)
+                                        .padding(.horizontal)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
+                        .padding(.bottom, 30)
                     }
-                    .padding(.bottom, 20)
                 }
             }
-            .navigationBarTitle("日历大盘", displayMode: .inline)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
             .sheet(isPresented: $isShowingAddSheet) {
                 EventAddEditView(initialDate: selectedDate)
                     .environmentObject(store)
@@ -953,7 +1375,9 @@ struct MyCalendarView: View {
                         .environmentObject(store)
                         .navigationBarItems(leading: Button("关闭") {
                             showingDetailEvent = nil
-                        })
+                        }
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(ThemeColor.textSecondary))
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
             }
@@ -969,31 +1393,26 @@ struct MyCalendarView: View {
     
     private func formatMonthYear(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月"
+        formatter.dateFormat = "yyyy 年 M 月"
         return formatter.string(from: date)
     }
     
     private func formatShortDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM月dd日"
+        formatter.dateFormat = "M 月 d 日"
         return formatter.string(from: date)
     }
     
-    // 获取当月42天的数据源(包含上下月补正空白)
     private func daysInMonth() -> [Date?] {
         guard let monthInterval = calendar.dateInterval(of: .month, for: currentMonth) else { return [] }
         let startOfMonth = monthInterval.start
-        
         let firstWeekday = calendar.component(.weekday, from: startOfMonth) - 1
-        
         var days: [Date?] = []
         
-        // 填充上月空白
         for _ in 0..<firstWeekday {
             days.append(nil)
         }
         
-        // 提取本月范围
         guard let range = calendar.range(of: .day, in: .month, for: currentMonth) else { return days }
         let numberOfDays = range.count
         for day in 1...numberOfDays {
@@ -1002,7 +1421,6 @@ struct MyCalendarView: View {
             }
         }
         
-        // 填充后续至42格
         while days.count < 42 {
             days.append(nil)
         }
@@ -1041,119 +1459,231 @@ struct SettingsView: View {
     @State private var isShowingImportSuccess = false
     @State private var importMessage = ""
     
-    // 深浅色模式手动切换（由于iOS13有.environment(\.colorScheme)，我们可以让用户自主选择跟随系统，或由开发者设置。这里在设置里提供一个模拟说明）
+    // 深浅色模式手动切换
     @State private var followSystemTheme = true
     @State private var isDarkModeLocal = false
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("本地消息提醒设置")) {
-                    Toggle(isOn: $store.isAppWideNotificationEnabled) {
-                        HStack {
-                            Image(systemName: "bell.fill")
-                                .foregroundColor(.orange)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("开启倒计时铃提醒推送")
-                                    .font(.subheadline)
-                                Text("若因未同意授权，请先往“设置-通知”开启")
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.gray)
+            ZStack {
+                ThemeColor.background.edgesIgnoringSafeArea(.all)
+                ThemeColor.gridTexture.edgesIgnoringSafeArea(.all)
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // 暖心大标题
+                        VStack(alignment: .leading, spacing: 4) {
+                            HandUnderlineTitle(title: "下拉配置簿", size: 24)
+                            Text("完全离线、全域保密，您的时光锁，只有您自己能开启。")
+                                .font(.system(size: 12))
+                                .foregroundColor(ThemeColor.textSecondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                        .padding(.top, 14)
+                        
+                        // 卡片一：通知提醒设置
+                        VStack(alignment: .leading, spacing: 14) {
+                            HStack {
+                                SectionMarker(title: "消息提醒设置", size: 15)
+                                Spacer()
+                            }
+                            
+                            Toggle(isOn: $store.isAppWideNotificationEnabled) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("开启全屏倒计铃推送")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundColor(ThemeColor.textPrimary)
+                                    Text("如不生效，请检查系统“设置-通知-纪念日”")
+                                        .font(.system(size: 10))
+                                        .foregroundColor(ThemeColor.textSecondary)
+                                }
+                            }
+                            .accentColor(ThemeColor.brandAccent)
+                            
+                            Divider().background(Color.black.opacity(0.04))
+                            
+                            Button(action: { sendNotificationTest() }) {
+                                HStack {
+                                    Image(systemName: "bell.fill")
+                                        .font(.system(size: 11))
+                                    Text("向本机模拟发送一条 5 秒后的测试提醒")
+                                        .font(.system(size: 12, weight: .bold))
+                                    Spacer()
+                                }
+                                .foregroundColor(ThemeColor.brandAccent)
+                                .padding(.vertical, 8)
                             }
                         }
-                    }
-                    
-                    Button(action: {
-                        sendNotificationTest()
-                    }) {
-                        HStack {
-                            Image(systemName: "bell.circle")
-                            Text("向本机发送一条5秒后的测试提醒")
+                        .padding(16)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.02), radius: 5, y: 2)
+                        .padding(.horizontal)
+                        
+                        // 卡片二：安全数据包管理
+                        VStack(alignment: .leading, spacing: 14) {
+                            HStack {
+                                SectionMarker(title: "安全数据包管理 (纯离线、极保密)", size: 15)
+                                Spacer()
+                            }
+                            
+                            Button(action: { doExport() }) {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle().fill(Color.orange.opacity(0.12)).frame(width: 32, height: 32)
+                                        Image(systemName: "square.and.arrow.up.fill")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundColor(.orange)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        Text("手动物理备份导出")
+                                            .font(.system(size: 13, weight: .semibold))
+                                            .foregroundColor(ThemeColor.textPrimary)
+                                        Text("将沙盒中的 events.json 数据包以及照片打包另存")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(ThemeColor.textSecondary)
+                                    }
+                                    Spacer()
+                                }
+                            }
+                            
+                            Divider().background(Color.black.opacity(0.04))
+                            
+                            Button(action: { isShowingImportAlert = true }) {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle().fill(Color.blue.opacity(0.12)).frame(width: 32, height: 32)
+                                        Image(systemName: "square.and.arrow.down.fill")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundColor(.blue)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        Text("从剪贴板读取数据合并")
+                                            .font(.system(size: 13, weight: .semibold))
+                                            .foregroundColor(ThemeColor.textPrimary)
+                                        Text("自动提取剪贴板中的备份数据并融合到当前日历中")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(ThemeColor.textSecondary)
+                                    }
+                                    Spacer()
+                                }
+                            }
+                            
+                            Divider().background(Color.black.opacity(0.04))
+                            
+                            Button(action: { showingClearAllAlert = true }) {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle().fill(Color.red.opacity(0.12)).frame(width: 32, height: 32)
+                                        Image(systemName: "trash.fill")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundColor(.red)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        Text("一键物理粉碎记录")
+                                            .font(.system(size: 13, weight: .bold))
+                                            .foregroundColor(.red)
+                                        Text("彻底擦断全部记录日志与物理图像，不可找回！")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(.red.opacity(0.8))
+                                    }
+                                    Spacer()
+                                }
+                            }
                         }
-                        .foregroundColor(.accentColor)
-                    }
-                }
-                
-                Section(header: Text("安全数据包管理 (全断网、极保密)")) {
-                    Button(action: {
-                        doExport()
-                    }) {
-                        HStack {
-                            Image(systemName: "square.and.arrow.up")
-                                .foregroundColor(.green)
-                            Text("手动备份数据导出 (保存到本机文件)")
-                                .foregroundColor(.primary)
+                        .padding(16)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.02), radius: 5, y: 2)
+                        .padding(.horizontal)
+                        
+                        // 卡片三：关于工坊
+                        VStack(alignment: .leading, spacing: 14) {
+                            HStack {
+                                SectionMarker(title: "隐私协议条款 & 自律机制", size: 15)
+                                Spacer()
+                            }
+                            
+                            Button(action: { isShowingPrivacySheet = true }) {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle().fill(Color.blue.opacity(0.12)).frame(width: 32, height: 32)
+                                        Image(systemName: "doc.text").font(.system(size: 13)).foregroundColor(.blue)
+                                    }
+                                    Text("脱网离线物理备份协议详情 (白皮书)")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundColor(ThemeColor.textPrimary)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 11, weight: .bold))
+                                        .foregroundColor(ThemeColor.textSecondary)
+                                }
+                            }
+                            
+                            Divider().background(Color.black.opacity(0.04))
+                            
+                            Button(action: { isShowingAboutSheet = true }) {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle().fill(Color.purple.opacity(0.12)).frame(width: 32, height: 32)
+                                        Image(systemName: "hand.draw").font(.system(size: 13)).foregroundColor(.purple)
+                                    }
+                                    Text("关于开发者手绘日记工坊")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundColor(ThemeColor.textPrimary)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 11, weight: .bold))
+                                        .foregroundColor(ThemeColor.textSecondary)
+                                }
+                            }
                         }
-                    }
-                    
-                    Button(action: {
-                        isShowingImportAlert = true
-                    }) {
-                        HStack {
-                            Image(systemName: "square.and.arrow.down")
-                                .foregroundColor(.blue)
-                            Text("粘贴剪贴板备份数据导入")
-                                .foregroundColor(.primary)
-                        }
-                    }
-                    
-                    Button(action: {
-                        showingClearAllAlert = true
-                    }) {
-                        HStack {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
-                            Text("一键抹除全部记录 (恢复初装状态)")
-                                .fontWeight(.bold)
-                                .foregroundColor(.red)
-                        }
-                    }
-                }
-                
-                Section(header: Text("关于纪念日 & 隐私保障")) {
-                    Button(action: {
-                        isShowingPrivacySheet = true
-                    }) {
-                        HStack {
-                            Image(systemName: "shield.fill")
-                                .foregroundColor(Color(red: 0, green: 0.5, blue: 0.5))
-                            Text("核心隐私政策及安全不联网规范")
-                                .foregroundColor(.primary)
-                        }
-                    }
-                    
-                    Button(action: {
-                        isShowingAboutSheet = true
-                    }) {
-                        HStack {
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.gray)
-                            Text("关于我们与App自律宗旨")
-                                .foregroundColor(.primary)
-                        }
+                        .padding(16)
+                        .background(ThemeColor.cardBackground)
+                        .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.02), radius: 5, y: 2)
+                        .padding(.horizontal)
+                        
+                        Text("纪念工坊一零〇版 / 物理级无损单机箱")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(ThemeColor.textSecondary)
+                            .padding(.top, 10)
+                            .padding(.bottom, 40)
                     }
                 }
             }
-            .navigationBarTitle("应用配置", displayMode: .inline)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
             .sheet(isPresented: $isShowingPrivacySheet) {
                 NavigationView {
-                    ScrollView {
-                        PrivacyDocView()
+                    ZStack {
+                        ThemeColor.background.edgesIgnoringSafeArea(.all)
+                        ScrollView {
+                            PrivacyDocView()
+                        }
                     }
                     .navigationBarTitle("隐私与合规规范详情", displayMode: .inline)
                     .navigationBarItems(leading: Button("关闭") {
                         isShowingPrivacySheet = false
-                    })
+                    }
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(ThemeColor.textSecondary))
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
             }
             .sheet(isPresented: $isShowingAboutSheet) {
                 NavigationView {
-                    AboutUsView()
-                        .navigationBarTitle("关于纪念工坊", displayMode: .inline)
-                        .navigationBarItems(leading: Button("关闭") {
-                            isShowingAboutSheet = false
-                        })
+                    ZStack {
+                        ThemeColor.background.edgesIgnoringSafeArea(.all)
+                        AboutUsView()
+                    }
+                    .navigationBarTitle("关于纪念工坊", displayMode: .inline)
+                    .navigationBarItems(leading: Button("关闭") {
+                        isShowingAboutSheet = false
+                    }
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(ThemeColor.textSecondary))
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
             }
@@ -1172,7 +1702,6 @@ struct SettingsView: View {
                     secondaryButton: .cancel(Text("保留"))
                 )
             }
-            // 剪贴板导入确认 Alert
             .alert(isPresented: $isShowingImportAlert) {
                 Alert(
                     title: Text("从粘贴板导入备份"),
@@ -1185,7 +1714,6 @@ struct SettingsView: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        // 成功反馈
         .background(
             EmptyView()
                 .alert(isPresented: $isShowingImportSuccess) {
@@ -1196,7 +1724,6 @@ struct SettingsView: View {
                     )
                 }
         )
-        // 失败反馈
         .background(
             EmptyView()
                 .alert(isPresented: $isShowingClipboardError) {
@@ -1400,8 +1927,11 @@ struct PrivacyConsentView: View {
                         .padding(.horizontal)
                         
                     VStack(alignment: .leading, spacing: 15) {
-                        HStack(alignment: .top) {
-                            Text("🔒").bold()
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "externaldrive.fill")
+                                .font(.system(size: 14))
+                                .foregroundColor(ThemeColor.brandAccent)
+                                .frame(width: 18)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("没有云端服务器，全部离线存储")
                                     .fontWeight(.bold)
@@ -1410,8 +1940,11 @@ struct PrivacyConsentView: View {
                             }
                         }
                         
-                        HStack(alignment: .top) {
-                            Text("🛡️").bold()
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "shield.fill")
+                                .font(.system(size: 14))
+                                .foregroundColor(ThemeColor.brandAccent)
+                                .frame(width: 18)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("零用户追踪，零广告 SDK")
                                     .fontWeight(.bold)
@@ -1420,8 +1953,11 @@ struct PrivacyConsentView: View {
                             }
                         }
                         
-                        HStack(alignment: .top) {
-                            Text("🎨").bold()
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "photo.fill")
+                                .font(.system(size: 14))
+                                .foregroundColor(ThemeColor.brandAccent)
+                                .frame(width: 18)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("相册与通知独立授权")
                                     .fontWeight(.bold)
@@ -1430,8 +1966,8 @@ struct PrivacyConsentView: View {
                             }
                         }
                         
-                        HStack(alignment: .top) {
-                            Text("�").bold()
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "gift.fill").font(.system(size: 14)).foregroundColor(ThemeColor.brandAccent).frame(width: 18)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("完全免费，无任何内购和广告")
                                     .fontWeight(.bold)

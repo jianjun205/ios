@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全与隐私基本准则（白皮书） - 时光纪念工坊</title>
+    <style>
+        :root {
+            --bg-color: #FCF9F3;
+            --card-bg: #FFFFFF;
+            --accent-color: #F56E7D;
+            --text-primary: #36312C;
+            --text-secondary: #706B65;
+            --line-color: #EEE9DE;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1A1816;
+                --card-bg: #272522;
+                --accent-color: #E26372;
+                --text-primary: #EDE9E4;
+                --text-secondary: #A39E96;
+                --line-color: #3B3834;
+            }
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 680px;
+            background: var(--card-bg);
+            border: 2px solid var(--line-color);
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            position: relative;
+        }
+
+        /* 模拟手账风格网格底纸纹理 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(var(--line-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line-color) 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        h1 {
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 30px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed var(--line-color);
+            position: relative;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        h2 {
+            font-size: 18px;
+            color: var(--accent-color);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+            margin-right: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0 0 15px 0;
+            text-align: justify;
+        }
+
+        code {
+            font-family: "SF Mono", Monaco, Consolas, monospace;
+            background-color: rgba(245, 110, 125, 0.1);
+            color: var(--accent-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--line-color);
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(245, 110, 125, 0.12);
+            color: var(--accent-color);
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="badge">自律保护·纯单机物理沙盒</span>
+        <h1>安全与隐私基本准则 (白皮书)</h1>
+        
+        <h2>1. 数据完全『脱网离线』存储</h2>
+        <p>本软件在设计之初就确立了“绝不接触、不存储用户任何文字及图片”的核心理念。一切应用数据、分类属性、配置项、通知延迟，全部通过系统的 <code>Codable</code> 机制固化在您个人的 iPhone 沙盒目录中的 <code>events.json</code> 物理文件上。应用甚至未申请网络套接字端口（Network Socket）以及任何联机域名，从物理层面杜绝任何数据上传的可能性。</p>
+
+        <h2>2. 图片『零批量、全物理离线本地化』机制</h2>
+        <p>关于相册存图：应用绝无批量网络图或图床服务。您为纪念日分配的背景照片，仅能在点击时通过 iOS 控制中心在您手机的「本地相册」中挑选。被选定的照片会被单张克隆（命名为 <code>ID.jpg</code>）存放在沙盒文档下，其他照片绝不会被程序扫描。所有的图片生成、裁剪及载入工作均在您的 iPhone 设备本地处理器上实时完成。</p>
+
+        <h2>3. 严格遵循 5.1 规则，不集成追踪 SDK</h2>
+        <p>我们拒绝在应用内集成目前市场上多见的第三方 SDK，包括但不限于：广告分发、热度埋点、用户设备画像、活跃度监控等（例如友盟、听云、AdMob 等）。本软件没有后台流量连接，没有任何形式的数据包会共享给第三方商业或调研机构。您的设备信息、使用习惯，均完全属于您自己。</p>
+
+        <h2>4. 纯净全功能免费承诺</h2>
+        <p>本软件的所有功能均完全向用户开放，零内购、零广告、零收费门槛。包括无限添加纪念日、自定义分类及其命名、本地私密相册、倒计时到期提醒等，皆为终身免费使用，不打扰，无弹窗。让您在安静、纯粹的手绘格本中独立记录每一份只属于您和时光的密语。</p>
+
+        <div class="footer">
+            纪念工坊一零〇版 / 物理级无损单机箱<br>
+            © 2026 时光纪念日手账工坊. 保留所有权利。
+        </div>
+    </div>
+</body>
+</html>
